@@ -5,8 +5,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
-import utils.paths.RandomPaths;
-import utils.paths.TopLevelPaths;
 
 import java.io.IOException;
 import java.io.Serial;
@@ -29,7 +27,7 @@ import java.util.function.Consumer;
 import static java.net.http.HttpResponse.BodyHandlers;
 import static utils.paths.RandomPaths.RAND_IMAGE_FIXED_SAVE_PATH;
 import static utils.paths.RandomPaths.RAND_JSON_CACHE_SAVE_PATH;
-import static utils.paths.TopLevelPaths.*;
+import static utils.paths.StandalonePaths.*;
 
 @SuppressWarnings("ALL")
 public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<String, Object>>, UnsplashRandom {
@@ -47,7 +45,7 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
 
     public boolean init() {
         loadToken();
-        if (Objects.isNull(client_id)) throw new NullPointerException("clientID is null");
+        if (Objects.isNull(client_id)) throw new NullPointerException("client_ID is null");
 
         var prepURLString = API_LINK.replace("API_KEY", client_id);
         var request = HttpRequest.newBuilder(URI.create(prepURLString)).build();
@@ -76,7 +74,7 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
     public boolean saveImageAsJSONFile() {
         if (!isInitialized()) return false;
         try {
-            var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample.json");
+            var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample-fixed.json");
             Files.deleteIfExists(prepPath);
             Files.writeString(prepPath, stringJSON);
             return true;

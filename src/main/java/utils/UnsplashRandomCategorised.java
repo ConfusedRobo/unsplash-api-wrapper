@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 import static java.net.http.HttpResponse.BodyHandlers;
 import static utils.paths.RandomPaths.RAND_CATEGORISED_SAVE_PATH;
 import static utils.paths.RandomPaths.RAND_JSON_CACHE_SAVE_PATH;
-import static utils.paths.TopLevelPaths.ENV_FILEPATH;
+import static utils.paths.StandalonePaths.ENV_FILEPATH;
 
 @SuppressWarnings("ALL")
 public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, Iterable<Map.Entry<String, Object>> {
@@ -76,7 +76,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     public boolean saveImageAsJSONFile() {
         if (!isInitialized()) return false;
         try {
-            var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample.json");
+            var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample-categorised.json");
             Files.deleteIfExists(prepPath);
             Files.writeString(prepPath, stringJSON);
             return true;
@@ -92,7 +92,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     @Override
     public boolean saveImageAsJPG() {
         var imageID = cachedImage.getString("id");
-        var filename = String.format("cat-%s", imageID);
+        var filename = String.format("%s-%s", category.strip().replace(' ', '-'), imageID);
         return saveImageAsJPG(filename);
     }
 

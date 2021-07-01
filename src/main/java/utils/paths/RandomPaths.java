@@ -1,6 +1,6 @@
 package utils.paths;
 
-import static utils.paths.TopLevelPaths.RESOURCE_PATH;
+import static utils.paths.StandalonePaths.RESOURCE_PATH;
 
 public interface RandomPaths {
     String RAND_JSON_CACHE_SAVE_PATH = RESOURCE_PATH + "/jsoncaches/random";
