@@ -1,5 +1,6 @@
 package models.model_utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 public class Location {
@@ -23,7 +24,7 @@ public class Location {
         this.coordinates.put("longitude", longitude);
     }
 
-    public Location(String title, String name, String city, String country, JSONObject coordinates) {
+    public Location(String title, String name, String city, String country, @NotNull JSONObject coordinates) {
         this(title, name, city, country, coordinates.getString("latitude"), coordinates.getString("longitude"));
     }
 

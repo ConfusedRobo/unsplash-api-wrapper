@@ -76,7 +76,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     public boolean saveImageAsJSONFile() {
         if (!isInitialized()) return false;
         try {
-            var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample-categorised.json");
+            var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample-tag.json");
             Files.deleteIfExists(prepPath);
             Files.writeString(prepPath, stringJSON);
             return true;
