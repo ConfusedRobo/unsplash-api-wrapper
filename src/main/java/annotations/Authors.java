@@ -8,5 +8,5 @@ import static java.lang.annotation.ElementType.*;
 @Documented
 @Target({TYPE, FIELD, METHOD})
 public @interface Authors {
-    AuthorInfo[] value();
+    Author[] value();
 }

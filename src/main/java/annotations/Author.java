@@ -9,7 +9,7 @@ import static java.lang.annotation.ElementType.*;
 @Documented
 @Repeatable(Authors.class)
 @Target({TYPE, FIELD, METHOD})
-public @interface AuthorInfo {
+public @interface Author {
     String author();
     String creation();
     String profile();

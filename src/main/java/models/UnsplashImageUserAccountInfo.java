@@ -1,6 +1,6 @@
 package models;
 
-import annotations.AuthorInfo;
+import annotations.Author;
 import models.model_utils.Location;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-@AuthorInfo(
+@Author(
         author = "ConfusedRobo",
         creation = "02-07-2021",
         profile = "https://github.com/ConfusedRobo"
