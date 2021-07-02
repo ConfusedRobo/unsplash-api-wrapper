@@ -1,14 +1,4 @@
 {
-  "id": "O67BfLHl4C0",
-  "created_at": "2019-06-15T01:01:37-04:00",
-  "updated_at": "2021-07-01T00:08:51-04:00",
-  "promoted_at": null,
-  "width": 4000,
-  "height": 4930,
-  "color": "#402626",
-  "blur_hash": "LJFEl#~CJ79u%eIpI:WXtkbIxGa#",
-  "description": null,
-  "alt_description": "adult golden retriever close-up photography",
   "urls": {
     "raw": "https://images.unsplash.com/photo-1560574544-70d9fb52e733?ixid=MnwyNDI1NDh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjUxMjMxMTE\u0026ixlib=rb-1.2.1",
     "full": "https://images.unsplash.com/photo-1560574544-70d9fb52e733?crop=entropy\u0026cs=srgb\u0026fm=jpg\u0026ixid=MnwyNDI1NDh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjUxMjMxMTE\u0026ixlib=rb-1.2.1\u0026q=85",
@@ -22,22 +12,7 @@
     "download": "https://unsplash.com/photos/O67BfLHl4C0/download",
     "download_location": "https://api.unsplash.com/photos/O67BfLHl4C0/download?ixid=MnwyNDI1NDh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjUxMjMxMTE"
   },
-  "categories": [],
-  "likes": 73,
-  "liked_by_user": false,
-  "current_user_collections": [],
-  "sponsorship": null,
   "user": {
-    "id": "scaWIfZz1xs",
-    "updated_at": "2021-06-30T18:09:15-04:00",
-    "username": "camilofierro14",
-    "name": "Camilo Fierro",
-    "first_name": "Camilo",
-    "last_name": "Fierro",
-    "twitter_username": null,
-    "portfolio_url": null,
-    "bio": null,
-    "location": null,
     "links": {
       "self": "https://api.unsplash.com/users/camilofierro14",
       "html": "https://unsplash.com/@camilofierro14",
@@ -51,17 +26,6 @@
       "small": "https://images.unsplash.com/profile-1547688226472-6e5cf553b445?ixlib=rb-1.2.1\u0026q=80\u0026fm=jpg\u0026crop=faces\u0026cs=tinysrgb\u0026fit=crop\u0026h=32\u0026w=32",
       "medium": "https://images.unsplash.com/profile-1547688226472-6e5cf553b445?ixlib=rb-1.2.1\u0026q=80\u0026fm=jpg\u0026crop=faces\u0026cs=tinysrgb\u0026fit=crop\u0026h=64\u0026w=64",
       "large": "https://images.unsplash.com/profile-1547688226472-6e5cf553b445?ixlib=rb-1.2.1\u0026q=80\u0026fm=jpg\u0026crop=faces\u0026cs=tinysrgb\u0026fit=crop\u0026h=128\u0026w=128"
-    },
-    "instagram_username": "camilofierro14",
-    "total_collections": 1,
-    "total_likes": 329,
-    "total_photos": 27,
-    "accepted_tos": true,
-    "for_hire": false,
-    "social": {
-      "instagram_username": "camilofierro14",
-      "portfolio_url": null,
-      "twitter_username": null
     }
   },
   "exif": {
@@ -71,17 +35,5 @@
     "aperture": "1.8",
     "focal_length": "50.0",
     "iso": 100
-  },
-  "location": {
-    "title": null,
-    "name": null,
-    "city": null,
-    "country": null,
-    "position": {
-      "latitude": null,
-      "longitude": null
-    }
-  },
-  "views": 264101,
-  "downloads": 2672
+  }
 }
