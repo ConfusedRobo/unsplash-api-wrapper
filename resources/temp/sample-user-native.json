@@ -1,0 +1,37 @@
+{
+  "total_photos": 644,
+  "accepted_tos": true,
+  "social": {
+    "twitter_username": null,
+    "instagram_username": "sayannath",
+    "portfolio_url": "https://www.youtube.com/channel/UCUeZjck1nzms3DFO8PITv6Q"
+  },
+  "twitter_username": null,
+  "last_name": "Nath",
+  "bio": "Follow me on Instagram @sayannath",
+  "total_likes": 2,
+  "portfolio_url": "https://www.youtube.com/channel/UCUeZjck1nzms3DFO8PITv6Q",
+  "profile_image": {
+    "small": "https://images.unsplash.com/profile-fb-1465045918-291eef4d0211.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32",
+    "large": "https://images.unsplash.com/profile-fb-1465045918-291eef4d0211.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=128&w=128",
+    "medium": "https://images.unsplash.com/profile-fb-1465045918-291eef4d0211.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=64&w=64"
+  },
+  "updated_at": "2021-07-01T02:24:39-04:00",
+  "for_hire": true,
+  "name": "Sayan Nath",
+  "location": "New Delhi",
+  "links": {
+    "followers": "https://api.unsplash.com/users/sayannath/followers",
+    "portfolio": "https://api.unsplash.com/users/sayannath/portfolio",
+    "following": "https://api.unsplash.com/users/sayannath/following",
+    "self": "https://api.unsplash.com/users/sayannath",
+    "html": "https://unsplash.com/@sayannath",
+    "photos": "https://api.unsplash.com/users/sayannath/photos",
+    "likes": "https://api.unsplash.com/users/sayannath/likes"
+  },
+  "total_collections": 2,
+  "id": "_7ldoV2Ti0g",
+  "first_name": "Sayan",
+  "instagram_username": "sayannath",
+  "username": "sayannath"
+}

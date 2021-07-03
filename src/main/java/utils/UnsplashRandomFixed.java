@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 import static java.net.http.HttpResponse.BodyHandlers;
 import static utils.paths.RandomPaths.RAND_IMAGE_FIXED_SAVE_PATH;
 import static utils.paths.RandomPaths.RAND_JSON_CACHE_SAVE_PATH;
-import static utils.paths.StandalonePaths.*;
+import static utils.paths.TopPaths.*;
 
 @SuppressWarnings("ALL")
 public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<String, Object>>, UnsplashRandom {

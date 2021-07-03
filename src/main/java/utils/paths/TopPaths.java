@@ -1,6 +1,6 @@
 package utils.paths;
 
-public interface StandalonePaths {
+public interface TopPaths {
     String RESOURCE_PATH = "resources";
     String ENV_FILEPATH = ".env";
     String LOG_PATH = RESOURCE_PATH + "/logs";
