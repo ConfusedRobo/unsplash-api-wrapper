@@ -1,8 +1,25 @@
 package models.model_utils;
 
+import annotations.Author;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+/**
+ * A model class that is made to parse the Unsplash JSON {@code KEY=user} to
+ * this class. The parsing should be handled with care. And, it is recommended
+ * to call the setters in the same order as in the JSON file. {@code Location}
+ * class plays a crucial role in building up the full JSON file, if you need to
+ * send a request to the server for posting an image, it is essential to build
+ * a {@code Location} object first then have a method repackage the given fields
+ * to a JSONObject for transfer.
+ *
+ * @see JSONObject
+ */
+@Author(
+        author = "ConfusedRobo",
+        creation = "02-07-2021",
+        profile = "https://github.com/ConfusedRobo"
+)
 public class Location {
     private String title;
     private String name;
@@ -12,6 +29,13 @@ public class Location {
     private JSONObject coordinates;
 
     public Location() {}
+
+    public Location(String title) { this.title = title; }
+
+    public Location(String title, String city) {
+        this.title = title;
+        this.city = city;
+    }
 
     public Location(String title, String name, String city, String country, String latitude, String longitude) {
         this.title = title;
