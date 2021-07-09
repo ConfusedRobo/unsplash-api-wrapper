@@ -3,6 +3,11 @@ package models.model_utils;
 import annotations.Author;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
+import org.json.JSONPropertyName;
+
+import java.util.Objects;
+
+import static java.util.Objects.isNull;
 
 /**
  * A model class that is made to parse the Unsplash JSON {@code KEY=user} to
@@ -44,13 +49,15 @@ public class Location {
         this.country = country;
 
         this.coordinates = new JSONObject();
-        this.coordinates.put("latitude", latitude);
-        this.coordinates.put("longitude", longitude);
+        this.coordinates.put("latitude", escapeNull(latitude));
+        this.coordinates.put("longitude", escapeNull(longitude));
     }
 
     public Location(String title, String name, String city, String country, @NotNull JSONObject coordinates) {
         this(title, name, city, country, coordinates.getString("latitude"), coordinates.getString("longitude"));
     }
+
+    private Object escapeNull(Object value) { return isNull(value) ? JSONObject.NULL : value; }
 
     public void setAll(String title, String name, String city, String country, JSONObject coordinates) {
         this.title = title;
@@ -62,9 +69,29 @@ public class Location {
 
     public void setAll(String title, String name, String city, String country, String latitude, String longitude) {
         var jsonBuilder = new JSONObject();
-        jsonBuilder.put("latitude", latitude);
-        jsonBuilder.put("longitude", longitude);
+        jsonBuilder.put("latitude", escapeNull(latitude));
+        jsonBuilder.put("longitude", escapeNull(longitude));
         setAll(title, name, city, country, jsonBuilder);
+    }
+
+    // "location": {
+    //   "title": null,
+    //   "name": null,
+    //   "city": null,
+    //   "country": null,
+    //   "position": {
+    //     "latitude": null,
+    //     "longitude": null
+    //   }
+    // }
+    public JSONObject packLocJSON() {
+        var jsonBuilder = new JSONObject();
+        jsonBuilder.put("title", escapeNull(title));
+        jsonBuilder.put("name", escapeNull(name));
+        jsonBuilder.put("city", escapeNull(city));
+        jsonBuilder.put("country", escapeNull(country));
+        jsonBuilder.put("position", coordinates);
+        return jsonBuilder;
     }
 
     public String getTitle() { return title; }
