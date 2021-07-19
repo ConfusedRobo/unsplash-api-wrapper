@@ -37,4 +37,8 @@ public class UnsplashImage {
         String small = "SMALL";
         String thumb = "thumb";
     }
+
+    public interface ImageJSONKeys {
+        String USER = "user";
+    }
 }

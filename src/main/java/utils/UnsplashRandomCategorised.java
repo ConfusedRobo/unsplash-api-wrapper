@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 import static java.net.http.HttpResponse.BodyHandlers;
 import static utils.paths.RandomPaths.RAND_CATEGORISED_SAVE_PATH;
 import static utils.paths.RandomPaths.RAND_JSON_CACHE_SAVE_PATH;
-import static utils.paths.StandalonePaths.ENV_FILEPATH;
+import static utils.paths.TopPaths.ENV_FILEPATH;
 
 @SuppressWarnings("ALL")
 public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, Iterable<Map.Entry<String, Object>> {

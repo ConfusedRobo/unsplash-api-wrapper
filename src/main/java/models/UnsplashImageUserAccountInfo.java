@@ -1,30 +1,36 @@
 package models;
 
-import annotations.AuthorInfo;
+import annotations.Author;
 import models.model_utils.Location;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import org.json.JSONObject;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+
+import static java.util.Objects.isNull;
+import static models.UnsplashImageUserAccountInfo.UserKeys.*;
 
 @SuppressWarnings("unused")
-@AuthorInfo(
+@Author(
         author = "ConfusedRobo",
         creation = "02-07-2021",
         profile = "https://github.com/ConfusedRobo"
 )
-public class UnsplashImageUserAccountInfo {
+public class UnsplashImageUserAccountInfo implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 238493282932L;
+
     private final String id;
     private String username;
 
-    private Map<String, URL> profileImageSizeLinks;
-    private Map<String, URL> userInfoLinks;
+    private final Map<String, URL> profileImageSizeLinks;
+    private final Map<String, URL> socialLinks;
 
     private String name;
     private String firstName;
@@ -33,85 +39,140 @@ public class UnsplashImageUserAccountInfo {
 
     private Location location;
     private UnsplashImageDateTimeData updatedAt;
-    private UnsplashImageDateTimeData createdAt;
 
     private String instagramUsername;
     private String twitterUsername;
     private URL portfolioURL;
 
-    private long totalPhotosLiked;
+    private long totalLikes;
     private long totalPhotosPosted;
     private long totalPhotoCollections;
 
     private boolean hireable;
     private boolean acceptedUnsplashTOS;
 
-    public UnsplashImageUserAccountInfo(String id) { this.id = id; }
+    public UnsplashImageUserAccountInfo(String id) {
+        this.id = id;
+
+        profileImageSizeLinks = new HashMap<>(3);
+        ProfileImageSizes.getAllKeys().forEach(
+                item -> profileImageSizeLinks.put(item, null)
+        );
+
+        socialLinks = new HashMap<>(50);
+        SocialKeys.getAllKeys().forEach(
+                item -> socialLinks.put(item, null)
+        );
+    }
 
     public UnsplashImageUserAccountInfo(String id, String username) {
         this(id);
         this.username = username;
     }
 
+    private Object escapeNull(Object value) {
+        return isNull(value) ? JSONObject.NULL : value;
+    }
+
+    public JSONObject packPFPSJSON() {
+        if (isNull(profileImageSizeLinks)) return null;
+        var jsonBuilder = new JSONObject();
+        profileImageSizeLinks.forEach(
+                (key, value) -> jsonBuilder.put(key, escapeNull(value))
+        ); return jsonBuilder;
+    }
+
+    public JSONObject packSocialsJSON() {
+        var jsonBuilder = new JSONObject();
+        jsonBuilder.put(INSTAGRAM_USERNAME, escapeNull(instagramUsername));
+        jsonBuilder.put(PORTFOLIO_URL, escapeNull(portfolioURL));
+        jsonBuilder.put(TWITTER_USERNAME, escapeNull(twitterUsername));
+        return jsonBuilder;
+    }
+
+    public JSONObject packSocialStatLinksJSON() {
+        var jsonBuilder = new JSONObject();
+        socialLinks.forEach(
+                (key, value) -> jsonBuilder.put(key, escapeNull(value))
+        ); return jsonBuilder;
+    }
+
+    public JSONObject packUserJSON() {
+        var jsonBuilder = new JSONObject();
+        jsonBuilder.put(TOTAL_PHOTOS, escapeNull(totalPhotosPosted));
+        jsonBuilder.put(ACCEPTED_TOS, escapeNull(acceptedUnsplashTOS));
+        jsonBuilder.put(SOCIAL, escapeNull(packSocialsJSON()));
+        jsonBuilder.put(TWITTER_USERNAME, escapeNull(twitterUsername));
+        jsonBuilder.put(LAST_NAME, escapeNull(lastName));
+        jsonBuilder.put(BIO, escapeNull(bio));
+        jsonBuilder.put(TOTAL_LIKES, totalLikes);
+        jsonBuilder.put(PORTFOLIO_URL, escapeNull(portfolioURL));
+        jsonBuilder.put(PROFILE_IMAGE, packPFPSJSON());
+        jsonBuilder.put(UPDATED_AT, escapeNull(updatedAt.getDateSource()));
+        jsonBuilder.put(FOR_HIRE, hireable);
+        jsonBuilder.put(NAME, name);
+        jsonBuilder.put(LOCATION, escapeNull(location.getCity()));
+        jsonBuilder.put(LINKS, packSocialStatLinksJSON());
+        jsonBuilder.put(TOTAL_COLLECTIONS, totalPhotoCollections);
+        jsonBuilder.put(ID, id);
+        jsonBuilder.put(FIRST_NAME, firstName);
+        jsonBuilder.put(INSTAGRAM_USERNAME, escapeNull(instagramUsername));
+        jsonBuilder.put(USERNAME, username);
+        return jsonBuilder;
+    }
+
+    public void addImageSize(@NotNull Map.Entry<String, URL> profileImageSizeLink) {
+        this.profileImageSizeLinks.put(
+                profileImageSizeLink.getKey(),
+                profileImageSizeLink.getValue()
+        );
+    }
+
+    public void addImageSize(String size, URL url) { addImageSize(Map.entry(size, url)); }
+
+    public void addImageSize(String size, String urlSource) throws MalformedURLException {
+        addImageSize(size, new URL(urlSource));
+    }
+
+    @SafeVarargs
+    public final void addAllSizes(@NotNull Map.Entry<String, URL>... profileImageSizeLinks) {
+        Arrays.stream(profileImageSizeLinks)
+              .forEach(this::addImageSize);
+    }
+
+    public void addAllSizes(@NotNull Map<String, URL> profileImageSizeLinks) {
+        this.profileImageSizeLinks.putAll(profileImageSizeLinks);
+    }
+
+    public void addSocialLink(Map.Entry<String, URL> socialLink) {
+        socialLinks.put(
+                socialLink.getKey(),
+                socialLink.getValue()
+        );
+    }
+
+    @SafeVarargs
+    public final void addSocialLinks(Map.Entry<String, URL>... socialLinks) {
+        Arrays.stream(socialLinks).forEach(this::addSocialLink);
+    }
+
+    public void addSocialLink(String socialType, URL url) {
+        addSocialLink(Map.entry(socialType, url));
+    }
+
+    public void addSocialLink(String socialType, String urlSource) throws MalformedURLException {
+        addSocialLink(socialType, new URL(urlSource));
+    }
+
+    public Map<String, URL> getProfileImageSizeLinks() { return this.profileImageSizeLinks; }
+
+    public Map<String, URL> getSocialLinks() { return socialLinks; }
+
     public String getId() { return id; }
 
     public String getUsername() { return username; }
 
     public void setUsername(String username) { this.username = username; }
-
-    public Map<String, URL> getProfileImageSizeLinks() {
-        return profileImageSizeLinks;
-    }
-
-    public JSONObject packPFPSJSON() {
-        if (Objects.isNull(profileImageSizeLinks)) return null;
-        var jsonBuilder = new JSONObject();
-        profileImageSizeLinks.forEach((key, value) -> jsonBuilder.put(key, value.toString()));
-        return jsonBuilder;
-    }
-
-    public JSONObject packPFPSJSONAPI() {
-        var normalImageLinksJSON = packPFPSJSON();
-        if (Objects.isNull(normalImageLinksJSON)) return null;
-        var jsonBuilder = new JSONObject();
-        jsonBuilder.put(UserKeys.PROFILE_IMAGE, normalImageLinksJSON);
-        return jsonBuilder;
-    }
-
-    public void addImageSize(@NotNull Map.Entry<String, URL> profileImageSizeLink) {
-        var containsImage = ProfileImageSizes
-                .getAllSizes()
-                .contains(profileImageSizeLink.getKey());
-        if (containsImage) System.err.println("Already has this size");
-        this.profileImageSizeLinks.put(profileImageSizeLink.getKey(), profileImageSizeLink.getValue());
-    }
-
-    public void addImageSize(String size, String urlSource) throws MalformedURLException {
-        addImageSize(Map.entry(size, new URL(urlSource)));
-    }
-
-    @SafeVarargs
-    public final void addAllSizes(@NotNull Map.Entry<String, URL>... profileImageSizeLinks) {
-        for (var entry : profileImageSizeLinks) addImageSize(entry);
-    }
-
-    public void addAllSizes(@NotNull Map<String, URL> profileImageSizeLinks) {
-        var entries = profileImageSizeLinks.entrySet();
-        for (var entry : entries) addImageSize(entry);
-    }
-
-    public Map<String, URL> getUserInfoLinks() {
-        return userInfoLinks;
-    }
-
-    public void setUserInfoLinks(Map<String, URL> userInfoLinks) {
-        this.userInfoLinks = userInfoLinks;
-    }
-
-    public JSONObject packUserInfoJSON() {
-        var jsonBuilder = new JSONObject();
-        return null;
-    }
 
     public String getName() { return name; }
 
@@ -131,83 +192,45 @@ public class UnsplashImageUserAccountInfo {
 
     public Location getLocation() { return location; }
 
+    public String getLocationTitle() { return location.getTitle(); }
+
     public void setLocation(Location location) { this.location = location; }
 
-    public UnsplashImageDateTimeData getUpdatedAt() {
-        return updatedAt;
-    }
+    public UnsplashImageDateTimeData getUpdatedAt() { return updatedAt; }
 
-    public void setUpdatedAt(UnsplashImageDateTimeData updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    public void setUpdatedAt(UnsplashImageDateTimeData updatedAt) { this.updatedAt = updatedAt; }
 
-    public UnsplashImageDateTimeData getCreatedAt() {
-        return createdAt;
-    }
+    public String getInstagramUsername() { return instagramUsername; }
 
-    public void setCreatedAt(UnsplashImageDateTimeData createdAt) {
-        this.createdAt = createdAt;
-    }
+    public void setInstagramUsername(String instagramUsername) { this.instagramUsername = instagramUsername; }
 
-    public String getInstagramUsername() {
-        return instagramUsername;
-    }
+    public String getTwitterUsername() { return twitterUsername; }
 
-    public void setInstagramUsername(String instagramUsername) {
-        this.instagramUsername = instagramUsername;
-    }
+    public void setTwitterUsername(String twitterUsername) { this.twitterUsername = twitterUsername; }
 
-    public String getTwitterUsername() {
-        return twitterUsername;
-    }
+    public URL getPortfolioURL() { return portfolioURL; }
 
-    public void setTwitterUsername(String twitterUsername) {
-        this.twitterUsername = twitterUsername;
-    }
+    public void setPortfolioURL(URL portfolioURL) { this.portfolioURL = portfolioURL; }
 
-    public URL getPortfolioURL() {
-        return portfolioURL;
-    }
+    public long getTotalLikes() { return totalLikes; }
 
-    public void setPortfolioURL(URL portfolioURL) {
-        this.portfolioURL = portfolioURL;
-    }
+    public void setTotalLikes(long totalLikes) { this.totalLikes = totalLikes; }
 
-    public long getTotalPhotosLiked() {
-        return totalPhotosLiked;
-    }
+    public long getTotalPhotosPosted() { return totalPhotosPosted; }
 
-    public void setTotalPhotosLiked(long totalPhotosLiked) {
-        this.totalPhotosLiked = totalPhotosLiked;
-    }
+    public void setTotalPhotosPosted(long totalPhotosPosted) { this.totalPhotosPosted = totalPhotosPosted; }
 
-    public long getTotalPhotosPosted() {
-        return totalPhotosPosted;
-    }
-
-    public void setTotalPhotosPosted(long totalPhotosPosted) {
-        this.totalPhotosPosted = totalPhotosPosted;
-    }
-
-    public long getTotalPhotoCollections() {
-        return totalPhotoCollections;
-    }
+    public long getTotalPhotoCollections() { return totalPhotoCollections; }
 
     public void setTotalPhotoCollections(long totalPhotoCollections) {
         this.totalPhotoCollections = totalPhotoCollections;
     }
 
-    public boolean isHireable() {
-        return hireable;
-    }
+    public boolean isHireable() { return hireable; }
 
-    public void setHireable(boolean hireable) {
-        this.hireable = hireable;
-    }
+    public void setHireable(boolean hireable) { this.hireable = hireable; }
 
-    public boolean isAcceptedUnsplashTOS() {
-        return acceptedUnsplashTOS;
-    }
+    public boolean hasAcceptedTOS() { return acceptedUnsplashTOS; }
 
     public void setAcceptedUnsplashTOS(boolean acceptedUnsplashTOS) {
         this.acceptedUnsplashTOS = acceptedUnsplashTOS;
@@ -218,7 +241,7 @@ public class UnsplashImageUserAccountInfo {
         public static String MEDIUM = "medium";
         public static String LARGE = "large";
 
-        public static List<String> getAllSizes() {
+        public static List<String> getAllKeys() {
             return List.of(
                     SMALL,
                     MEDIUM,
@@ -271,6 +294,28 @@ public class UnsplashImageUserAccountInfo {
                     FIRST_NAME,
                     INSTAGRAM_USERNAME,
                     USERNAME
+            );
+        }
+    }
+
+    public static abstract class SocialKeys {
+        public static final String FOLLOWERS = "followers";
+        public static final String FOLLOWING = "following";
+        public static final String PORTFOLIO = "portfolio";
+        public static final String SELF = "self";
+        public static final String HTML = "html";
+        public static final String PHOTOS = "photos";
+        public static final String LIKES = "likes";
+
+        public static List<String> getAllKeys() {
+            return List.of(
+                    FOLLOWERS,
+                    FOLLOWING,
+                    PORTFOLIO,
+                    SELF,
+                    HTML,
+                    PHOTOS,
+                    LIKES
             );
         }
     }

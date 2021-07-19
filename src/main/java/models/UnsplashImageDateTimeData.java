@@ -84,6 +84,8 @@ public class UnsplashImageDateTimeData implements Serializable, Iterable<Map.Ent
         return jsonBuilder;
     }
 
+    public String getDateSource() { return dateSource; }
+
     @NotNull
     @Override
     public Iterator<Map.Entry<String, Object>> iterator() {
@@ -101,5 +103,15 @@ public class UnsplashImageDateTimeData implements Serializable, Iterable<Map.Ent
     }
 
     @Override
-    public String toString() { return dateSource; }
+    public String toString() {
+        return "UnsplashImageDateTimeData{" +
+               "accessor=" + accessor +
+               ", dateSource='" + dateSource + '\'' +
+               ", date=" + date +
+               ", time=" + time +
+               ", chronology=" + chronology +
+               ", offset=" + offset +
+               ", zone=" + zone +
+               '}';
+    }
 }
