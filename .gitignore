@@ -1,5 +1,4 @@
 /.idea/
 /.env
 /src/main/java/Main.java
-/*.jpg
-/*.json
+/target/

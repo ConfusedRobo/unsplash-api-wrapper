@@ -2,21 +2,21 @@ package interfaces;
 
 import java.io.Serializable;
 
-@SuppressWarnings("UnusedReturnValue")
-public abstract class UnsplashRandom implements Serializable {
+@SuppressWarnings("ALL")
+public interface UnsplashRandom extends Serializable {
 
-    public static final String API_LINK = "https://api.unsplash.com/photos/random/?client_id=API_KEY";
+    String API_LINK = "https://api.unsplash.com/photos/random/?client_id=API_KEY";
+    String LINK_SUBPART_QUERY = "&query=CATEGORY";
 
+    boolean init();
 
-    public abstract boolean init();
+    boolean saveImageAsJSONFile();
 
-    public abstract boolean saveImageAsJSONFile();
+    String downloadLink();
 
-    public abstract String downloadLink();
+    boolean saveImageAsJPG();
 
-    public abstract boolean saveImageAsJPG();
+    boolean saveImageAsJPG(String filename);
 
-    public abstract boolean saveImageAsJPG(String filename);
-
-    public abstract void reset();
+    void reset();
 }
