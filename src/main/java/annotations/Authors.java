@@ -22,6 +22,11 @@ import static java.lang.annotation.ElementType.*;
 @Documented
 @Target({TYPE, FIELD, METHOD})
 @Retention(RetentionPolicy.CLASS)
+@Author(
+        author = "ConfusedRobo",
+        creation = "29-06-2021",
+        profile = "https://github.com/ConfusedRobo"
+)
 public @interface Authors {
     /**
      * The container which will store all the instances of {@code Author}

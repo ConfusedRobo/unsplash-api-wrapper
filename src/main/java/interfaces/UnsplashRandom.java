@@ -42,10 +42,10 @@ public interface UnsplashRandom extends Serializable {
      * for you to use JSON and also have a field variable that stores all the parsed
      * JSON code.<br/>
      * <b>
-     *     Important: It is recommended for you to call this method first to avoid
-     *     unnecessary side effects. As, if the environemt variable and image JSON
-     *     isn't loaded then the other methods will malfunction. And, most of the
-     *     methods rely on calling {@code init()} first
+     * Important: It is recommended for you to call this method first to avoid
+     * unnecessary side effects. As, if the environemt variable and image JSON
+     * isn't loaded then the other methods will malfunction. And, most of the
+     * methods rely on calling {@code init()} first
      * <b/>
      *
      * @return a boolean
@@ -81,20 +81,21 @@ public interface UnsplashRandom extends Serializable {
      * parses the response from the server in bytes. and writes to a {@code jpg}
      * image file with a random name.<br/><br/>
      * <b>
-     *     Important: Choose the random element carefully or they might conflict and
-     *     be ovewritten, also it is recommended to add the {@code id} from the image
-     *     JSON to the name of the image file.
+     * Important: Choose the random element carefully or they might conflict and
+     * be ovewritten, also it is recommended to add the {@code id} from the image
+     * JSON to the name of the image file.
      * <b/><br/>
      * <hr/>
      * <b>
-     *     Note: The download link should be available in the JSON that was fetched during
-     *     initialization.
+     * Note: The download link should be available in the JSON that was fetched during
+     * initialization.
      * </b><br/>
      * <hr/>
      * <b>
-     *     Tip: pass the name to the {@code saveImageAsJPG(String filename)} as there's
-     *     no use of doing the same thing twice.
+     * Tip: pass the name to the {@code saveImageAsJPG(String filename)} as there's
+     * no use of doing the same thing twice.
      * <b/>
+     *
      * @return a boolean
      * @see java.net.http.HttpRequest
      * @see org.json.JSONObject
@@ -105,8 +106,8 @@ public interface UnsplashRandom extends Serializable {
      * Same as the {@code saveImageAsJPG()}, just that now this method should be able to
      * assign a name to the {@code jpg} image file.<br/>
      * <b>
-     *     Important: Use an escaping mechanism that removes a custom path as, the save
-     *     paths are carefully mapped to a fixed file loaction
+     * Important: Use an escaping mechanism that removes a custom path as, the save
+     * paths are carefully mapped to a fixed file loaction
      * <b/>
      *
      * @param filename the name of the file
@@ -118,7 +119,7 @@ public interface UnsplashRandom extends Serializable {
      * Clears all the stored caches and makes the implementation reusable i.e., primable
      * for another image fetch.
      * <b>
-     *     Important: Don't forget to re-invoke the {@code init()} method.
+     * Important: Don't forget to re-invoke the {@code init()} method.
      * <b/>
      */
     void reset();
