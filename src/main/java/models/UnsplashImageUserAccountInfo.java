@@ -23,8 +23,12 @@ import static models.UnsplashImageUserAccountInfo.UserKeys.*;
         profile = "https://github.com/ConfusedRobo"
 )
 public class UnsplashImageUserAccountInfo implements Serializable {
+    /**
+     * The serial version number field that will assist the JVM to correctly
+     * cast/parse the object
+     */
     @Serial
-    private static final long serialVersionUID = 238493282932L;
+    private static final long serialVersionUID = 1L;
 
     private final String id;
     private String username;

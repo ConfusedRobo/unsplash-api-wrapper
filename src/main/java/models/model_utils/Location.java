@@ -27,8 +27,12 @@ import static java.util.Objects.isNull;
         profile = "https://github.com/ConfusedRobo"
 )
 public class Location implements Serializable {
+    /**
+     * The serial version number field that will assist the JVM to correctly
+     * cast/parse the object
+     */
     @Serial
-    private static final long serialVersionUID = 3985791234L;
+    private static final long serialVersionUID = 1L;
     /**
      * The title of the location the photo was taken taken in (if any)
      */

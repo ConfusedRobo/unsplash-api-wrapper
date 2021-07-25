@@ -4,11 +4,19 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.awt.*;
+import java.io.Serial;
+import java.io.Serializable;
 
 import static java.lang.System.err;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class UnsplashImageMetadata {
+public class UnsplashImageMetadata implements Serializable {
+    /**
+     * The serial version number field that will assist the JVM to correctly
+     * cast/parse the object
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private String blurhash;
     private String color;

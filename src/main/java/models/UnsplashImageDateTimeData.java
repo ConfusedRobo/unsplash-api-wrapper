@@ -32,8 +32,12 @@ public class UnsplashImageDateTimeData implements Serializable, Iterable<Map.Ent
     private ZoneOffset offset;
     private ZoneId zone;
 
+    /**
+     * The serial version number field that will assist the JVM to correctly
+     * cast/parse the object
+     */
     @Serial
-    private static final long serialVersionUID = 812346812L;
+    private static final long serialVersionUID = 1L;
 
     public UnsplashImageDateTimeData(String dateSource) {
         this.accessor = DATE_TIME_FORMATTER.parse(dateSource);

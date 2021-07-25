@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * This annotation stores all the instances of {@code Author} annotation.
@@ -21,7 +22,7 @@ import static java.lang.annotation.ElementType.*;
  */
 @Documented
 @Target({TYPE, FIELD, METHOD})
-@Retention(RetentionPolicy.CLASS)
+@Retention(CLASS)
 @Author(
         author = "ConfusedRobo",
         creation = "29-06-2021",

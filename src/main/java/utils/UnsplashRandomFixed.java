@@ -71,7 +71,7 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
     }
 
     @Override
-    public boolean saveImageAsJSONFile() {
+    public boolean toJSON() {
         if (!isInitialized()) return false;
         try {
             var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample-fixed.json");
@@ -95,15 +95,15 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
     }
 
     @Override
-    public boolean saveImageAsJPG() {
+    public boolean toJPG() {
         var imageID = cachedImage.getString("id");
         var filename = String.format("%s", imageID);
-        return saveImageAsJPG(filename);
+        return toJPG(filename);
     }
 
     @SuppressWarnings("DuplicatedCode")
     @Override
-    public boolean saveImageAsJPG(String filename) {
+    public boolean toJPG(String filename) {
         if (!isInitialized()) return false;
         var imageBytes = getImageBytes();
         if (Objects.isNull(imageBytes)) return false;

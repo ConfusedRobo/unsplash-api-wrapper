@@ -2,6 +2,7 @@ package interfaces;
 
 import annotations.Author;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -20,6 +21,14 @@ import java.io.Serializable;
 )
 @SuppressWarnings("ALL")
 public interface UnsplashRandom extends Serializable {
+
+    /**
+     * The serial version number field that will assist the JVM to correctly
+     * cast/parse the object
+     */
+    @Serial
+    static final long serialVersionUID = 1L;
+
     /**
      * Prepared link for entering the API key, which is saved in an {@code .env}
      * file, which should be loaded on runtime and be replaced with the
@@ -63,7 +72,7 @@ public interface UnsplashRandom extends Serializable {
      * @see org.json.JSONObject
      * @see java.net.http.HttpRequest
      */
-    boolean saveImageAsJSONFile();
+    boolean toJSON();
 
     /**
      * An utility method that is not necessary but we strongly recommend using it
@@ -100,7 +109,7 @@ public interface UnsplashRandom extends Serializable {
      * @see java.net.http.HttpRequest
      * @see org.json.JSONObject
      */
-    boolean saveImageAsJPG();
+    boolean toJPG();
 
     /**
      * Same as the {@code saveImageAsJPG()}, just that now this method should be able to
@@ -113,7 +122,7 @@ public interface UnsplashRandom extends Serializable {
      * @param filename the name of the file
      * @return a boolean
      */
-    boolean saveImageAsJPG(String filename);
+    boolean toJPG(String filename);
 
     /**
      * Clears all the stored caches and makes the implementation reusable i.e., primable

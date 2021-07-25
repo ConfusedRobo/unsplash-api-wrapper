@@ -3,10 +3,18 @@ package models;
 import models.model_utils.Location;
 import org.json.JSONArray;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-public class UnsplashImage {
+public class UnsplashImage implements Serializable {
+    /**
+     * The serial version number field that will assist the JVM to correctly
+     * cast/parse the object
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final String id;
     private String sponsorship;
     private JSONArray currentUserCollections;

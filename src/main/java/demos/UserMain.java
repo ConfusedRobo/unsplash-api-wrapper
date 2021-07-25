@@ -13,7 +13,7 @@ import java.net.URL;
 import static models.UnsplashImageUserAccountInfo.ProfileImageSizes.*;
 import static models.UnsplashImageUserAccountInfo.SocialKeys.*;
 
-public class ParseUser {
+public class UserMain {
 
     public static void main(String... args) throws IOException {
         var account = new UnsplashImageUserAccountInfo("_7ldoV2Ti0g", "sayannath");
