@@ -2,6 +2,7 @@ package utils;
 
 import interfaces.UnsplashRandom;
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -42,7 +43,6 @@ import static utils.paths.TopPaths.ENV_FILEPATH;
  * and pass the new category.
  *
  * @author ConfuesdRobo
- *
  * @see UnsplashRandom
  * @see Iterable
  * @see Entry
@@ -87,7 +87,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      */
     private String stringJSON;
     /**
-     * The same string as stored in the {@link UnsplashRandomCategorised#stringJSON}
+     * The same string as stored in the {@link #stringJSON}
      * field variable, will be parsed here rather than just storing a sting with no semantics.
      *
      * @see JSONObject
@@ -97,7 +97,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     /**
      * The default behavior; only the API key will be loaded
      *
-     * @see UnsplashRandomCategorised#loadToken()
+     * @see #loadToken()
      */
     public UnsplashRandomCategorised() { loadToken(); }
 
@@ -105,7 +105,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      * This constructor assigns a category or a tag during declaration
      *
      * @param category the category of the image
-     * @see UnsplashRandomCategorised#loadToken()
+     * @see #loadToken()
      */
     public UnsplashRandomCategorised(String category) {
         this.category = category;
@@ -117,7 +117,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      * after execution is completed
      *
      * @see Dotenv#configure()
-     * @see Dotenv#configure()#loadToken()
+     * @see DotenvBuilder#filename(String)
      * @see Dotenv#load()
      * @see Dotenv#get(String)
      */
@@ -125,14 +125,13 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
 
     /**
      * Checks if the {@code cachedImage} field and the {@code stringJSON} has been initialised or
-     * not. Note that, this method is mainly used by {@link UnsplashRandomCategorised#toJSON()},
-     * {@link UnsplashRandomCategorised#downloadLink()} and {@link UnsplashRandomCategorised#toJPG()}
+     * not. Note that, this method is mainly used by {@link #toJSON()},
+     * {@link #downloadLink()} and {@link #toJPG()}
      * before accessing those field's member methods so, they need to perform a check first to
      * ensure they are not null, or, else it'll yield a {@link NullPointerException}
      *
-     * @return a {@code true} if {@link UnsplashRandomCategorised#cachedImage} and
-     * {@link UnsplashRandomCategorised#stringJSON} fields are not {@code null}, {@code false} otherwise.
-     *
+     * @return a {@code true} if {@link #cachedImage} and
+     * {@link #stringJSON} fields are not {@code null}, {@code false} otherwise.
      * @see Objects#nonNull(Object)
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -142,14 +141,13 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      * This method method first checks if the API key is loaded into the runtime, if it is, then
      * the method performs an API call to the Unsplash server and fetches and encodes the bytes
      * into {@link StandardCharsets#UTF_8} format and then first assigns the encode string to the
-     * {@link UnsplashRandomCategorised#stringJSON} field then assigns that same string to the
-     * {@link UnsplashRandomCategorised#cachedImage} field, which adds semantics to that normal
+     * {@link #stringJSON} field then assigns that same string to the
+     * {@link #cachedImage} field, which adds semantics to that normal
      * string.
      *
-     * @return true if the {@link UnsplashRandomCategorised#client_id} is loaded and also if
-     * {@link UnsplashRandomCategorised#stringJSON} and {@link UnsplashRandomCategorised#cachedImage}
+     * @return true if the {@link #client_id} is loaded and also if
+     * {@link #stringJSON} and {@link #cachedImage}
      * are assigned, false otherwise.
-     *
      * @see Objects#isNull(Object)
      * @see URI#create(String)
      * @see CompletableFuture
@@ -190,11 +188,10 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     }
 
     /**
-     * Same as {@link UnsplashRandomCategorised#init()} only that it allows you to update the
-     * {@link UnsplashRandomCategorised#category} field on initialization
+     * Same as {@link #init()} only that it allows you to update the
+     * {@link #category} field on initialization
      *
      * @param category the topic or genre of random image ou want to generate
-     *
      * @return {@code true} is the image has been generated without any errors, {@code false} otherwise
      */
     public boolean init(String category) {
@@ -216,10 +213,9 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     }
 
     /**
-     * Writes the {@link UnsplashRandomCategorised#stringJSON} to a file
+     * Writes the {@link #stringJSON} to a file
      *
      * @return {@code true} if no {@link IOException} occurs, {@code false} otherwise
-     *
      * @see Path#of(String, String...)
      * @see Files#deleteIfExists(Path)
      * @see Files#writeString(Path, CharSequence, OpenOption...)
@@ -239,7 +235,6 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      * This is a utility method, it just fetches the download link from the JSON and returns it.
      *
      * @return a {@code String} that'll contain the download URL, {@code null} otherwise
-     *
      * @see JSONObject#getString(String)
      * @see JSONObject#getJSONObject(String)
      */
@@ -250,17 +245,15 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     }
 
     /**
-     * This method fetches the {@link UnsplashRandomCategorised#getImageBytes()} and then writes
+     * This method fetches the {@link #getImageBytes()} and then writes
      * those bytes into a JPG file
      *
      * @param filename the name of the file
-     *
      * @return {@code true} if the image has been written successfully, {@code false}
      * if {@link IOException} or, any other error occurs
-     *
      * @see IOException
      * @see Objects#isNull(Object)
-     * @see UnsplashRandomCategorised#isInit()
+     * @see #isInit()
      * @see Files#write(Path, byte[], OpenOption...)
      * @see Path#of(String, String...)
      */
@@ -291,8 +284,8 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     }
 
     /**
-     * Resets the class fields i.e., you'd need to call {@link UnsplashRandomCategorised#init()} or
-     * {@link UnsplashRandomCategorised#init(String)} again in order to reassign/prime the fields for
+     * Resets the class fields i.e., you'd need to call {@link #init()} or
+     * {@link #init(String)} again in order to reassign/prime the fields for
      * another use.
      */
     @Override
@@ -306,7 +299,6 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      * Returns an iterator over elements of type {@code T}.
      *
      * @return an Iterator.
-     *
      * @see Entry
      * @see JSONObject#toMap()
      * @see Map#entrySet()
@@ -328,15 +320,13 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      *
      * @param action The action to be performed for each element
      * @throws NullPointerException if the specified action is null
-     * @implSpec <p>The default implementation behaves as if:
-     * <pre>{@code
-     *     for (T t : this)
-     *         action.accept(t);
-     * }</pre>
-     * @since 1.8
-     *
+     *                              <pre>{@code
+     *                                  for (T t : this)
+     *                                      action.accept(t);
+     *                              }</pre>
      * @see Consumer
      * @see Iterable
+     * @since 1.8
      */
     @Override
     public void forEach(Consumer<? super Entry<String, Object>> action) { Iterable.super.forEach(action); }
@@ -361,7 +351,6 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      * </pre></blockquote>
      *
      * @return a string representation of the object.
-     *
      * @see Objects#nonNull(Object)
      */
     @Override

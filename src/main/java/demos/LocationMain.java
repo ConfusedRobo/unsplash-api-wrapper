@@ -6,6 +6,6 @@ public class LocationMain {
 
     public static void main(String... args) {
         var location = new Location(null, null, null, null, null, null);
-        System.out.println(location.packLocJSON().toString(2));
+        System.out.println(location.toJSON().toString(2));
     }
 }

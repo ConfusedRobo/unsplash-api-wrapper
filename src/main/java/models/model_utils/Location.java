@@ -61,14 +61,15 @@ public class Location implements Serializable {
     public Location() {}
 
     /**
-     * Sets the {@code title} field.
+     * Sets the {@link #title} field.
      *
      * @param title the title of the location the photograph was taken in.
      */
     public Location(String title) { this.title = title; }
 
     /**
-     * A convenience method for setting {@code title} and {@code city} fields all in one go.
+     * A convenience method for setting {@link #title}
+     * and {@link #city} fields all in one go.
      *
      * @param title the title of the location the photo graph was taken in.
      * @param city  the city where the photograph was taken at.
@@ -81,7 +82,7 @@ public class Location implements Serializable {
     /**
      * A convenience constructor that sets all of the fields separately, especially, the latitude and
      * longitude part which takes those in separately as parameters and then packs them in a
-     * {@code JSONObject} and then sets the coordinate field.
+     * {@link JSONObject} and then sets the coordinate field.
      *
      * @param title     the title of the location where the photo was taken in.
      * @param name      the name where the photo was taken in.
@@ -104,7 +105,7 @@ public class Location implements Serializable {
 
     /**
      * A convenience constructor that takes in all of the field value as is more precisely it
-     * takes in the {@code coordinate} field as a {@code JSONObject} and not as strings
+     * takes in the {@link #coordinates} field as a {@link JSONObject} and not as strings
      * like its supertype.
      *
      * @param title       the title of the location where the photo was taken in.
@@ -120,20 +121,20 @@ public class Location implements Serializable {
     }
 
     /**
-     * A simple utility method that escapes a {@code null} value/type. Note that the {@code org.json} API doesn't
-     * allow null to be a type to be a value in {@code JSONObject} so to replace that, the static field called
-     * {@code JSONObject.NULL} is used and this method just replaces and return {@code JSONObject.NULL} if it
+     * A simple utility method that escapes a {@code null} value/type. Note that the {@link org.json} API doesn't
+     * allow null to be a type to be a value in {@link JSONObject} so to replace that, the static field called
+     * {@link JSONObject#NULL} is used and this method just replaces and return {@link JSONObject#NULL} if it
      * encounters a {@code null} object/type
      *
-     * @param value and value/object/type that is changed to {@code JSONObject.NULL} if {@code null} is passed.
-     * @return {@code JSONObject.NULL} value that denotes null/None/Nothing/Empty in a JSON file.
+     * @param value and value/object/type that is changed to {@link JSONObject#NULL} if {@code null} is passed.
+     * @return {@link JSONObject#NULL} value that denotes null/None/Nothing/Empty in a JSON file.
      * @see JSONObject
      */
     private Object escapeNull(Object value) { return isNull(value) ? JSONObject.NULL : value; }
 
     /**
      * A convenience method that takes in all of the field value as is more precisely it
-     * takes in the {@code coordinate} field as a {@code JSONObject} and not as strings
+     * takes in the {@link #coordinates} field as a {@link JSONObject} and not as strings
      * like its supertype.
      *
      * @param title       the title of the location where the photo was taken in.
@@ -155,7 +156,7 @@ public class Location implements Serializable {
     /**
      * A convenience method that sets all of the fields separately, especially, the latitude and
      * longitude part which takes those in separately as parameters and then packs them in a
-     * {@code JSONObject} and then sets the coordinate field.
+     * {@link JSONObject} and then sets the coordinate field.
      *
      * @param title     the title of the location where the photo was taken in.
      * @param name      the name where the photo was taken in.
@@ -173,7 +174,7 @@ public class Location implements Serializable {
     }
 
     /**
-     * Packs all of the fields into a JSONObject.<br/>
+     * Packs all of the fields into a {@link JSONObject}.<br/>
      * The JSON structure will look like:
      * <pre>{@code
      * "location": {
@@ -188,10 +189,10 @@ public class Location implements Serializable {
      * }
      * }
      *
-     * @return a {@code JSONObject}
+     * @return a {@link JSONObject}
      * @see JSONObject
      */
-    public JSONObject packLocJSON() {
+    public JSONObject toJSON() {
         var jsonBuilder = new JSONObject();
         jsonBuilder.put("title", escapeNull(title));
         jsonBuilder.put("name", escapeNull(name));
@@ -202,28 +203,28 @@ public class Location implements Serializable {
     }
 
     /**
-     * Getter for the {@code title} field.
+     * Getter for the {@link #title} field.
      *
-     * @return a {@code String}
+     * @return a {@link String}
      */
     public String getTitle() { return title; }
 
     /**
-     * Setter for the {@code title} field
+     * Setter for the {@link #title} field
      *
      * @param title the tile of the place the photo was taken in
      */
     public void setTitle(String title) { this.title = title; }
 
     /**
-     * Getter for the {@code name} field.
+     * Getter for the {@link #name} field.
      *
-     * @return a {@code String}
+     * @return a {@link String}
      */
     public String getName() { return name; }
 
     /**
-     * Setter for the {@code name} field
+     * Setter for the {@link #name} field
      *
      * @param name the name of the location the photo was taken at.
      */
@@ -232,40 +233,40 @@ public class Location implements Serializable {
     /**
      * Getter for the name of the city the photo was taken at.
      *
-     * @return a {@code String}
+     * @return a {@link String}
      */
     public String getCity() { return city; }
 
     /**
-     * Setter for the {@code city} field.
+     * Setter for the {@link #city} field.
      *
      * @param city the name of the city where the photo was taken in.
      */
     public void setCity(String city) { this.city = city; }
 
     /**
-     * Getter for the {@code country} field.
+     * Getter for the {@link #country} field.
      *
-     * @return a {@code String}
+     * @return a {@link String}
      */
     public String getCountry() { return country; }
 
     /**
-     * Setter for the {@code country} field.
+     * Setter for the {@link #country} field.
      *
      * @param country is the name of the country where the photo was taken in.
      */
     public void setCountry(String country) { this.country = country; }
 
     /**
-     * Getter for the {@code coordinate} field.
+     * Getter for the {@link #coordinates} field.
      *
-     * @return a {@code String}
+     * @return a {@link String}
      */
     public JSONObject getCoordinates() { return coordinates; }
 
     /**
-     * Setter for the {@code coordinate} field.
+     * Setter for the {@link #coordinates} field.
      *
      * @param coordinates is the latitude and longitude value of the exact location where the
      *                    photo was taken in.
@@ -276,12 +277,12 @@ public class Location implements Serializable {
      * Returns a string representation of the object. In general, the
      * {@code toString} method returns a string that
      * "textually represents" this object.
-     * It basically calls the {@code packLocJSON()} method which returns
-     * a {@code JSONObject} and the {@code toString()} of that object is
+     * It basically calls the {@link #toJSON()} method which returns
+     * a {@link JSONObject} and the {@link JSONObject#toString(int)} of that object is
      * printed, with an indent factor of 2 tabs.
      *
-     * @return a {@code String}
+     * @return a {@link String}
      */
     @Override
-    public String toString() { return packLocJSON().toString(2); }
+    public String toString() { return toJSON().toString(2); }
 }
