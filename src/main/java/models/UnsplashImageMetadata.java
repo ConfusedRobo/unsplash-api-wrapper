@@ -68,8 +68,8 @@ public class UnsplashImageMetadata implements Serializable {
         jsonBuilder.put("dimension", this.dimension);
         jsonBuilder.put("width", this.width);
         jsonBuilder.put("height", this.height);
-        jsonBuilder.put("creation_date", this.createdAt.getDate());
-        jsonBuilder.put("updation_date", this.updatedAt.getDate());
+        jsonBuilder.put("creation_date", this.createdAt.date());
+        jsonBuilder.put("updation_date", this.updatedAt.date());
         return jsonBuilder;
     }
 

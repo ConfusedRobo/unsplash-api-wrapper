@@ -112,7 +112,7 @@ public class UnsplashImageUserAccountInfo implements Serializable {
         jsonBuilder.put(TOTAL_LIKES, totalLikes);
         jsonBuilder.put(PORTFOLIO_URL, escapeNull(portfolioURL));
         jsonBuilder.put(PROFILE_IMAGE, packPFPSJSON());
-        jsonBuilder.put(UPDATED_AT, escapeNull(updatedAt.getDateSource()));
+        jsonBuilder.put(UPDATED_AT, escapeNull(updatedAt.source()));
         jsonBuilder.put(FOR_HIRE, hireable);
         jsonBuilder.put(NAME, name);
         jsonBuilder.put(LOCATION, escapeNull(location.getCity()));
