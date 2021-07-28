@@ -29,7 +29,7 @@ import static java.util.Objects.isNull;
 public class Location implements Serializable {
     /**
      * The serial version number field that will assist the JVM to correctly
-     * cast/parse the object
+     * serialize/deserialize the object
      */
     @Serial
     private static final long serialVersionUID = 1L;

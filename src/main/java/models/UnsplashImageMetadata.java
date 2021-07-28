@@ -3,9 +3,9 @@ package models;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
-import java.awt.*;
 import java.io.Serial;
 import java.io.Serializable;
+import models.model_utils.Dimension;
 
 import static java.lang.System.err;
 
@@ -25,8 +25,6 @@ public class UnsplashImageMetadata implements Serializable {
     private UnsplashImageDateTimeData updatedAt;
 
     private Dimension dimension;
-    private int height;
-    private int width;
 
     public void setBlurhash(String blurhash) { this.blurhash = blurhash; }
 
@@ -49,34 +47,22 @@ public class UnsplashImageMetadata implements Serializable {
 
     public void setDimension(@NotNull Dimension dimension) {
         this.dimension = dimension;
-        this.width = dimension.width;
-        this.height = dimension.height;
     }
 
     public void setDimension(int width, int height) {
         this.dimension = new Dimension(width, height);
-        this.width = width;
-        this.height = height;
     }
 
-    public JSONObject packMDasJSONNative() {
+    public JSONObject toJSON() {
         var jsonBuilder = new JSONObject();
         jsonBuilder.put("blurhash", this.blurhash);
         jsonBuilder.put("color", this.color);
         jsonBuilder.put("created_at", this.createdAt);
         jsonBuilder.put("updated_at", this.updatedAt);
-        jsonBuilder.put("dimension", this.dimension);
-        jsonBuilder.put("width", this.width);
-        jsonBuilder.put("height", this.height);
+        jsonBuilder.put("width", dimension.width);
+        jsonBuilder.put("height", dimension.height);
         jsonBuilder.put("creation_date", this.createdAt.date());
         jsonBuilder.put("updation_date", this.updatedAt.date());
-        return jsonBuilder;
-    }
-
-    public JSONObject packMDasJSONStringValued() {
-        var jsonNative = packMDasJSONNative();
-        var jsonBuilder = new JSONObject();
-        jsonNative.toMap().forEach((key, value) -> jsonBuilder.put(key, value.toString()));
         return jsonBuilder;
     }
 
