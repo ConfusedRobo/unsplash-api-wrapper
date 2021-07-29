@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-public class UnsplashImage implements Serializable {
+public class Image implements Serializable {
     /**
      * The serial version number field that will assist the JVM to correctly
      * cast/parse the object
@@ -25,9 +25,9 @@ public class UnsplashImage implements Serializable {
     private String description;
     private String altDescription;
 
-    private UnsplashImageMetadata metadata;
-    private UnsplashImageDateTimeData promotedAt;
-    private UnsplashImageUserAccountInfo userAccountInfo;
+    private ImageMetadata metadata;
+    private ImageDateTime promotedAt;
+    private UserAccount userAccountInfo;
     private Location location;
 
     private long downloads;
@@ -36,7 +36,7 @@ public class UnsplashImage implements Serializable {
 
     private boolean imageLikedByOP;
 
-    public UnsplashImage(String id) { this.id = id; }
+    public Image(String id) { this.id = id; }
 
     public interface ImageSizes {
         String RAW = "raw";

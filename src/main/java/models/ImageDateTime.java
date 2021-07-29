@@ -36,7 +36,7 @@ import java.util.function.Consumer;
  * @see Serializable
  * @see JSONObject
  */
-public class UnsplashImageDateTimeData implements Serializable, Iterable<Map.Entry<String, Object>> {
+public class ImageDateTime implements Serializable, Iterable<Map.Entry<String, Object>> {
     /**
      * The raw string that should follow the {@link DateTimeFormatter#ISO_DATE_TIME} format.
      *
@@ -93,7 +93,7 @@ public class UnsplashImageDateTimeData implements Serializable, Iterable<Map.Ent
      * @see DateTimeFormatter#parse(CharSequence)
      * @see TemporalQueries
      */
-    public UnsplashImageDateTimeData(String dateSource) {
+    public ImageDateTime(String dateSource) {
         var accessor = DateTimeFormatter.ISO_DATE_TIME.parse(dateSource);
         this.dateSource = dateSource;
 

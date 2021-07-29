@@ -13,11 +13,11 @@ public final class Dimension implements Serializable {
     /**
      * The width of the image that will be specified in the fetched JSON file
      */
-    public final int width;
+    public int width;
     /**
      * The height of the image that will be specified in the fetched JSON file
      */
-    public final int height;
+    public int height;
 
     /**
      * The serial version number field that will assist the JVM to correctly
@@ -34,4 +34,9 @@ public final class Dimension implements Serializable {
      * @param height that assigns the {@link #height} field
      */
     public Dimension(int width, int height) { this.width = width; this.height = height; }
+
+    /**
+     * The default constructor
+     */
+    public Dimension() {}
 }

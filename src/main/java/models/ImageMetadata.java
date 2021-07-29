@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @see Serializable
  */
 @SuppressWarnings("SpellCheckingInspection")
-public class UnsplashImageMetadata implements Serializable {
+public class ImageMetadata implements Serializable {
     /**
      * The serial version number field that will assist the JVM to correctly
      * serialize/deserialize the object
@@ -37,11 +37,11 @@ public class UnsplashImageMetadata implements Serializable {
     /**
      * The {@code created_at} JSON field
      */
-    public UnsplashImageDateTimeData createdAt;
+    public ImageDateTime createdAt;
     /**
      * The {@code updated_at} JSON field
      */
-    public UnsplashImageDateTimeData updatedAt;
+    public ImageDateTime updatedAt;
 
     /**
      * The {@code width} and {@code height} fields which are packed into one class {@link Dimension}
