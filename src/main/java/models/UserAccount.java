@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import static java.util.Arrays.*;
+import static java.util.List.of;
 import static java.util.Map.entry;
 import static java.util.Objects.isNull;
 import static models.UserAccount.UserKeys.*;
@@ -327,95 +328,172 @@ public class UserAccount implements Serializable {
     }
 
     /**
-     *
+     * This class is a collection of all {@code profile} JSON key's value keys
      */
     public static abstract class PFPSizes {
+        /**
+         * The small profile image size link's key
+         */
         public static String SMALL = "small";
+        /**
+         * The medium profile image size link's key
+         */
         public static String MEDIUM = "medium";
+        /**
+         * The large profile image size link's key
+         */
         public static String LARGE = "large";
 
         /**
-         * Packs all of the
-         * @return
+         * Packs all of the {@code profile} keys into a list which may be used for
+         * validation or, other purposes
+         *
+         * @return an unmodiable {@link List} of keys
          */
         @Contract(pure = true)
-        public static @NotNull @Unmodifiable List<String> getAllKeys() {
-            return List.of(
-                    SMALL,
-                    MEDIUM,
-                    LARGE
-            );
-        }
+        public static @NotNull @Unmodifiable List<String> getAllKeys() { return of(SMALL, MEDIUM, LARGE); }
     }
 
+    /**
+     * This class is a collection of all {@code user} JSON keys except {@code profile} and {@code socials} keys
+     */
     public static abstract class UserKeys {
+        /**
+         * The total amount of photos posted key
+         */
         public static String TOTAL_PHOTOS = "total_photos";
+        /**
+         * This key signifies whether the user has accepted the unsplash terms and conditions
+         */
         public static String ACCEPTED_TOS = "accepted_tos";
+        /**
+         * The social nested JSON key
+         */
         public static String SOCIAL = "social";
+        /**
+         * The Twitter username of the user key
+         */
         public static String TWITTER_USERNAME = "twitter_username";
+        /**
+         * The last name of the user key
+         */
         public static String LAST_NAME = "last_name";
+        /**
+         * The bio of the user key
+         */
         public static String BIO = "bio";
+        /**
+         * The total likes on the user's profile key
+         */
         public static String TOTAL_LIKES = "total_likes";
+        /**
+         * The portfolio url key
+         */
         public static String PORTFOLIO_URL = "portfolio_url";
+        /**
+         * The portfolio url that points to the user's portfolio key
+         */
         public static String PROFILE_IMAGE = "profile_image";
+        /**
+         * The last date the profile was updated/modified key
+         */
         public static String UPDATED_AT = "updated_at";
+        /**
+         * This key signifies whether the user is hireable or not
+         */
         public static String FOR_HIRE = "for_hire";
+        /**
+         * The name of the user key
+         */
         public static String NAME = "name";
+        /**
+         * The location of the user
+         */
         public static String LOCATION = "location";
+        /**
+         * The links key
+         */
         public static String LINKS = "links";
+        /**
+         * The total photo albums/collections made by the user key
+         */
         public static String TOTAL_COLLECTIONS = "total_collections";
+        /**
+         * The id of the user key
+         */
         public static String ID = "id";
+        /**
+         * The first name of the user key
+         */
         public static String FIRST_NAME = "first_name";
+        /**
+         * The instragram username key
+         */
         public static String INSTAGRAM_USERNAME = "instagram_username";
+        /**
+         * The username of the user key
+         */
         public static String USERNAME = "username";
 
+        /**
+         * Packs all of the {@code user} keys into a list except {@code profile} and {@code socials} keys
+         * which may be used for validation or, other purposes
+         *
+         * @return an unmodifiable {@link List} of keys
+         */
         @Unmodifiable
         @Contract(pure = true)
         public static List<String> getAllKeys() {
-            return List.of(
-                    TOTAL_PHOTOS,
-                    ACCEPTED_TOS,
-                    SOCIAL,
-                    TWITTER_USERNAME,
-                    LAST_NAME,
-                    BIO,
-                    TOTAL_LIKES,
-                    PORTFOLIO_URL,
-                    PROFILE_IMAGE,
-                    UPDATED_AT,
-                    FOR_HIRE,
-                    NAME,
-                    LOCATION,
-                    LINKS,
-                    TOTAL_COLLECTIONS,
-                    ID,
-                    FIRST_NAME,
-                    INSTAGRAM_USERNAME,
-                    USERNAME
+            return of(
+                    TOTAL_PHOTOS, ACCEPTED_TOS, SOCIAL, TWITTER_USERNAME, LAST_NAME, BIO, TOTAL_LIKES,
+                    PORTFOLIO_URL, PROFILE_IMAGE, UPDATED_AT, FOR_HIRE, NAME, LOCATION, LINKS,
+                    TOTAL_COLLECTIONS, ID, FIRST_NAME, INSTAGRAM_USERNAME, USERNAME
             );
         }
     }
 
+    /**
+     * This class is a collection of all {@code user} JSON keys except {@code profile} and {@code socials} keys
+     */
     public static abstract class SocialKeys {
+        /**
+         * The total amount of unsplash followers key
+         */
         public static final String FOLLOWERS = "followers";
+        /**
+         * The total number of unsplash accounts following key
+         */
         public static final String FOLLOWING = "following";
+        /**
+         * The portfolio link key
+         */
         public static final String PORTFOLIO = "portfolio";
+        /**
+         * The self profile link key
+         */
         public static final String SELF = "self";
+        /**
+         * The html link key
+         */
         public static final String HTML = "html";
+        /**
+         * The total number of photos posted key
+         */
         public static final String PHOTOS = "photos";
+        /**
+         * The total number of likes key
+         */
         public static final String LIKES = "likes";
 
+        /**
+         * Packs all of the {@code social} keys into a list and a few other that are related to
+         * social statictics which may be used for validation or, other purposes
+         *
+         * @return an unmodifiable {@link List} of keys
+         */
         @Contract(pure = true)
         public static @NotNull @Unmodifiable List<String> getAllKeys() {
-            return List.of(
-                    FOLLOWERS,
-                    FOLLOWING,
-                    PORTFOLIO,
-                    SELF,
-                    HTML,
-                    PHOTOS,
-                    LIKES
-            );
+            return of(FOLLOWERS, FOLLOWING, PORTFOLIO, SELF, HTML, PHOTOS, LIKES);
         }
     }
 }

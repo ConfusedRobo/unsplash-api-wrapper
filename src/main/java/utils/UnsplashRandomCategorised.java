@@ -4,6 +4,7 @@ import interfaces.UnsplashRandom;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvBuilder;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -206,7 +207,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      * @return {@code byte[]} which is the image's byte stream, {@code null} if any {@link IOException}
      * occurs
      */
-    private byte[] getImageBytes() {
+    private byte @Nullable [] getImageBytes() {
         try (var stream = new URL(downloadLink()).openStream()) {
             return stream.readAllBytes();
         } catch (IOException exception) { return null; }

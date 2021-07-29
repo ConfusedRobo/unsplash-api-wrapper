@@ -88,7 +88,7 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
     }
 
     @Nullable
-    private byte[] getImageBytes() {
+    private byte @Nullable [] getImageBytes() {
         try (var stream = new URL(downloadLink()).openStream()) {
             return stream.readAllBytes();
         } catch (IOException exception) { return null; }
