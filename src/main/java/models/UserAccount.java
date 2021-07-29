@@ -11,7 +11,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +25,13 @@ import static models.UserAccount.UserKeys.*;
  * This class represents the {@code user} JSON fragment from the fetched JSON file. The {@code user}
  * key is basically based on social statictics keys like: instagram username, likes, photos posted -
  * their porfolio links, location - hireability - first name, last name and download links for
- * different sizes of the user's profile image. Also, all of the available user keys are noted in
- * {@link UserKeys}, the profile image sizes are noted at {@link ProfileSizes} and lastly, all of the
+ * different sizes of the user's profile image. Also, all the available user keys are noted in
+ * {@link UserKeys}, the profile image sizes are noted at {@link PFPSizes} and lastly, all of the
  * available social image keys are noted at {@link SocialKeys}.
  *
  * @see UserKeys
  * @see SocialKeys
- * @see ProfileSizes
+ * @see PFPSizes
  * @see Serializable
  * @see Location
  * @see ImageDateTime
@@ -53,7 +52,7 @@ public class UserAccount implements Serializable {
     /**
      * The profile size i.e. {@code profile_image} JSON fields will be stored here
      *
-     * @see ProfileSizes
+     * @see PFPSizes
      */
     public final Map<String, URL> profileImageSizeLinks;
     /**
@@ -139,7 +138,7 @@ public class UserAccount implements Serializable {
      */
     public UserAccount() {
         profileImageSizeLinks = new HashMap<>(3);
-        ProfileSizes.getAllKeys().forEach(
+        PFPSizes.getAllKeys().forEach(
                 item -> profileImageSizeLinks.put(item, null)
         );
 
@@ -235,51 +234,112 @@ public class UserAccount implements Serializable {
     }
 
     /**
-     * Add a user profile picture url to the available image sizes' list
+     * Adds an {@link Entry} of user profile picture url with the size key to the available
+     * image sizes' list
      *
      * @param profileImageSizeLinks a map entry {@link Entry} for a user profile picture size link
      */
     public void addProfileSize(@NotNull Entry<String, URL> profileImageSizeLinks) {
-        this.profileImageSizeLinks.put(
-                profileImageSizeLinks.getKey(),
-                profileImageSizeLinks.getValue()
-        );
+        this.profileImageSizeLinks.put(profileImageSizeLinks.getKey(), profileImageSizeLinks.getValue());
     }
 
+    /**
+     * This method is similar to {@link #addProfileSize(Entry)}. It's just that this method takes two params
+     * and packs into a {@link Entry} i.e., the size of the image and the url link that points to that image
+     * resource
+     *
+     * @param size the size of the user's profile image which should be picked out from {@link PFPSizes}
+     * @param url the url of the profile image
+     */
     public void addProfileSize(String size, URL url) { addProfileSize(entry(size, url)); }
 
+    /**
+     * This method accepts raw strings as their url and size key in which, the url string will be parsed into
+     * {@link URL} format
+     *
+     * @param size the size of the user's profile image which should be picked out from {@link PFPSizes}
+     * @param urlSource the url source string for the profile image
+     * @throws MalformedURLException if the said url to be parsed's format is wrong
+     */
     public void addProfileSize(String size, String urlSource) throws MalformedURLException {
         addProfileSize(size, new URL(urlSource));
     }
 
+    /**
+     * This method adds an array of entries all at once
+     *
+     * @param profileImageSizeLinks an array of {@link Entry}
+     */
     @SafeVarargs
     public final void addAllSizes(@NotNull Entry<String, URL>... profileImageSizeLinks) {
         stream(profileImageSizeLinks).forEach(this::addProfileSize);
     }
 
+    /**
+     * This method adds a map of entries all at once
+     *
+     * @param profileImageSizeLinks a {@link Map} of all entries
+     */
     public void addAllSizes(@NotNull Map<String, URL> profileImageSizeLinks) {
         this.profileImageSizeLinks.putAll(profileImageSizeLinks);
     }
 
-    public void addLink(Entry<String, URL> socialLink) { links.put(socialLink.getKey(), socialLink.getValue()); }
+    /**
+     * Adds an {@link Entry} of the fetched image url with the size key to the available
+     * image sizes' list
+     *
+     * @param socialLink an {@link Entry} instance that must contain the size key
+     *                   from {@link SocialKeys} fields and an url pointing to that
+     *                   image resource
+     */
+    public void addLink(@NotNull Entry<String, URL> socialLink) {
+        links.put(socialLink.getKey(), socialLink.getValue());
+    }
 
+    /**
+     * This method is similar to {@link #addLink(Entry)}. It's just that this method takes two params
+     * and packs into a {@link Entry} i.e., the social type key and the url link that points to that image
+     * resource
+     *
+     * @param socialType the social type key which should be picked out from {@link SocialKeys}
+     * @param url the {@link URL} of the image resource
+     */
+    public void addLink(String socialType, URL url) { addLink(entry(socialType, url)); }
+
+    /**
+     * This method adds all entries at once via. an {@link Entry} array
+     *
+     * @param socialLinks is the array of {@link Entry}
+     */
     @SafeVarargs
     public final void addLinks(Entry<String, URL>... socialLinks) { stream(socialLinks).forEach(this::addLink); }
 
-    public void addLink(String socialType, URL url) {
-        addLink(entry(socialType, url));
-    }
-
+    /**
+     * This method accepts raw strings as their url and social key in which, the url string will be
+     * parsed into {@link URL} format
+     *
+     * @param socialType the social key that should be picked out from {@link SocialKeys}
+     * @param urlSource the resource pointing to that image resource
+     * @throws MalformedURLException if the raw url string is in incorrect format
+     */
     public void addLink(String socialType, String urlSource) throws MalformedURLException {
         addLink(socialType, new URL(urlSource));
     }
 
-    public static abstract class ProfileSizes {
+    /**
+     *
+     */
+    public static abstract class PFPSizes {
         public static String SMALL = "small";
         public static String MEDIUM = "medium";
         public static String LARGE = "large";
 
-        public static List<String> getAllKeys() {
+        /**
+         * Packs all of the
+         * @return
+         */
+        @Contract(pure = true)
+        public static @NotNull @Unmodifiable List<String> getAllKeys() {
             return List.of(
                     SMALL,
                     MEDIUM,
@@ -345,7 +405,8 @@ public class UserAccount implements Serializable {
         public static final String PHOTOS = "photos";
         public static final String LIKES = "likes";
 
-        public static List<String> getAllKeys() {
+        @Contract(pure = true)
+        public static @NotNull @Unmodifiable List<String> getAllKeys() {
             return List.of(
                     FOLLOWERS,
                     FOLLOWING,

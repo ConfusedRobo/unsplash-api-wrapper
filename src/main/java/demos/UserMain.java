@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 
-import static models.UserAccount.ProfileSizes.*;
+import static models.UserAccount.PFPSizes.*;
 import static models.UserAccount.SocialKeys.*;
 
 public class UserMain {
