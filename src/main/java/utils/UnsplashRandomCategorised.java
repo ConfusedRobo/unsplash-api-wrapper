@@ -59,6 +59,8 @@ import static utils.paths.TopPaths.ENV_FILEPATH;
  * @see Files
  * @see Path
  * @see CompletableFuture
+ *
+ * @author ConfusedRobo
  */
 public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, Iterable<Entry<String, Object>> {
     /**
@@ -70,6 +72,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
      */
     @Serial
     private static final long serialVersionUID = 1L;
+
     /**
      * The API key that will be stored here during runtime
      */
@@ -141,7 +144,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     /**
      * This method method first checks if the API key is loaded into the runtime, if it is, then
      * the method performs an API call to the Unsplash server and fetches and encodes the bytes
-     * into {@link StandardCharsets#UTF_8} format and then first assigns the encode string to the
+     * into {@link StandardCharsets#UTF_8} format and then first assigns the encoded string to the
      * {@link #stringJSON} field then assigns that same string to the
      * {@link #cachedImage} field, which adds semantics to that normal
      * string.
@@ -246,8 +249,7 @@ public class UnsplashRandomCategorised implements Serializable, UnsplashRandom, 
     }
 
     /**
-     * This method fetches the {@link #getImageBytes()} and then writes
-     * those bytes into a JPG file
+     * This method fetches the {@link #getImageBytes()} and then writes those bytes into a JPG file
      *
      * @param filename the name of the file
      * @return {@code true} if the image has been written successfully, {@code false}
