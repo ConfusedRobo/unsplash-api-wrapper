@@ -1,14 +1,21 @@
 package utils.paths;
 
+import annotations.Author;
+
 /**
- * This interface is a collection of all of the main/global paths that are and
+ * This interface is a collection of all the main/global paths that are and
  * will be used throughout the project.
  *
  * @author ConfusedRobo
  */
+@Author(
+        author = "ConfusedRobo",
+        creation = "Monday, 19 July, 2021, 05:34:35 PM",
+        profile = "https://github.com/heretickeymaker"
+)
 public interface TopPaths {
     /**
-     * This path where all of the resources like logs, temp, json files, images are stored
+     * This path where all the resources like logs, temp, json files, images are stored
      */
     String RESOURCE_PATH = "resources";
     /**
@@ -16,11 +23,11 @@ public interface TopPaths {
      */
     String ENV_FILEPATH = ".env";
     /**
-     * The path to logs directory where all of the logs are stored
+     * The path to logs directory where all the logs are stored
      */
     String LOG_PATH = RESOURCE_PATH + "/logs";
     /**
-     * The path to temp directory where all of the temporary files are and
+     * The path to temp directory where all the temporary files are and
      * is recommended to be stored
      */
     String TEMP_PATH = RESOURCE_PATH + "/temp";

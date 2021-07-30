@@ -1,5 +1,6 @@
 package models;
 
+import annotations.Author;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
@@ -18,7 +19,7 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 
 /**
- * This class will parse all of the dates from the image JSON file. Note that the JSON file will
+ * This class will parse all the dates from the image JSON file. Note that the JSON file will
  * contain date keys like {@code created_at, updated_at, promoted_at}, etc. Also, the unsplash API uses
  * the <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format.<br/>
  * An example of the JSON fragment that'll contain the date string:<br/>
@@ -35,7 +36,14 @@ import java.util.function.Consumer;
  * @see Iterable
  * @see Serializable
  * @see JSONObject
+ *
+ * @author ConfusedRobo
  */
+@Author(
+        author = "ConfusedRobo",
+        creation = "Monday, 19 July, 2021, 05:34:35 PM",
+        profile = "https://github.com/heretickeymaker"
+)
 public class ImageDateTime implements Serializable, Iterable<Map.Entry<String, Object>> {
     /**
      * The raw string that should follow the {@link DateTimeFormatter#ISO_DATE_TIME} format.
@@ -46,32 +54,32 @@ public class ImageDateTime implements Serializable, Iterable<Map.Entry<String, O
     private final String dateSource;
 
     /**
-     * The date part that will be extracted from the {@link #dateSource} after parsing.
+     * The date part that will be extracted from the {@link ImageDateTime#dateSource} after parsing.
      *
      * @see LocalDate
      */
     private final LocalDate date;
     /**
-     * The time part that will be extracted from the {@link #dateSource} after parsing.
+     * The time part that will be extracted from the {@link ImageDateTime#dateSource} after parsing.
      *
      * @see LocalTime
      */
     private final LocalTime time;
 
     /**
-     * The chronology part that will be extracted from the {@link #dateSource} after parsing.
+     * The chronology part that will be extracted from the {@link ImageDateTime#dateSource} after parsing.
      *
      * @see Chronology
      */
     private final Chronology chronology;
     /**
-     * The zone offset part that will be extracted from the {@link #dateSource} after parsing.
+     * The zone offset part that will be extracted from the {@link ImageDateTime#dateSource} after parsing.
      *
      * @see ZoneOffset
      */
     private final ZoneOffset offset;
     /**
-     * The zone id part that will be extracted from the {@link #dateSource} after parsing.
+     * The zone id part that will be extracted from the {@link ImageDateTime#dateSource} after parsing.
      *
      * @see ZoneId
      */
@@ -85,7 +93,7 @@ public class ImageDateTime implements Serializable, Iterable<Map.Entry<String, O
     private static final long serialVersionUID = 1L;
 
     /**
-     * A constructor, that parses all of the necessary information about the raw date string
+     * A constructor, that parses all the necessary information about the raw date string
      * right when an instance is created. Note that it isn't reusable i.e., You'd need to declare
      * another instance if you want to parse another date source string.
      *
@@ -105,42 +113,42 @@ public class ImageDateTime implements Serializable, Iterable<Map.Entry<String, O
     }
 
     /**
-     * Getter for {@link #date}, extracting the date fragment out of the raw date string
+     * Getter for {@link ImageDateTime#date}, extracting the date fragment out of the raw date string
      *
      * @return a {@link LocalDate} instance that will contain the date fragment.
      */
     public LocalDate date() { return date; }
 
     /**
-     * Getter for {@link #time}, extracting the time fragment out of the raw date string
+     * Getter for {@link ImageDateTime#time}, extracting the time fragment out of the raw date string
      *
      * @return a {@link LocalTime} instance that will contain the time fragment
      */
     public LocalTime time() { return time; }
 
     /**
-     * Getter for {@link #chronology}, extracting the chronology fragment out of the raw date string
+     * Getter for {@link ImageDateTime#chronology}, extracting the chronology fragment out of the raw date string
      *
      * @return a {@link Chronology} instance that will contain the chronology fragment
      */
     public Chronology chronology() { return chronology; }
 
     /**
-     * Getter for {@link #offset}, extracting the zone offset fragment out of the raw date string
+     * Getter for {@link ImageDateTime#offset}, extracting the zone offset fragment out of the raw date string
      *
      * @return a {@link ZoneOffset} instance that will contain the offset fragment
      */
     public ZoneOffset offset() { return offset; }
 
     /**
-     * Getter for {@link #zone}, extracting the zone id fragment out of the date source string
+     * Getter for {@link ImageDateTime#zone}, extracting the zone id fragment out of the date source string
      *
      * @return a {@link ZoneId} instance that will contain the zone id fragment
      */
     public ZoneId zone() { return zone; }
 
     /**
-     * Getter for {@link #dateSource} string
+     * Getter for {@link ImageDateTime#dateSource} string
      *
      * @return a {@code String} that'll contain the raw date string
      */
@@ -159,8 +167,8 @@ public class ImageDateTime implements Serializable, Iterable<Map.Entry<String, O
     public Object escapeNull(Object object) { return object == null ? JSONObject.NULL : object; }
 
     /**
-     * Packs {@link #date}, {@link #time}, {@link #chronology}, {@link #offset} and {@link #zone} into
-     * a {@link JSONObject}.
+     * Packs {@link ImageDateTime#date}, {@link ImageDateTime#time}, {@link ImageDateTime#chronology},
+     * {@link ImageDateTime#offset} and {@link ImageDateTime#zone} into a {@link JSONObject}.
      *
      * @return a {@link JSONObject} instance
      */
@@ -191,7 +199,7 @@ public class ImageDateTime implements Serializable, Iterable<Map.Entry<String, O
      * caller.
      * <p>
      * The behavior of this method is unspecified if the action performs
-     * side-effects that modify the underlying source of elements, unless an
+     * side effects that modify the underlying source of elements, unless an
      * overriding class has specified a concurrent modification policy.
      *
      * @param action The action to be performed for each element

@@ -19,22 +19,23 @@ import static java.util.Objects.isNull;
  * to a JSONObject for transfer.
  *
  * @see JSONObject
+ *
+ * @author ConfusedRobo
  */
-@SuppressWarnings({"unused"})
 @Author(
         author = "ConfusedRobo",
         creation = "02-07-2021",
-        profile = "https://github.com/ConfusedRobo"
+        profile = "https://github.com/heretickeymaker"
 )
 public class Location implements Serializable {
     /**
      * The serial version number field that will assist the JVM to correctly
-     * serialize/deserialize the object
+     * serialize and deserialize the object
      */
     @Serial
     private static final long serialVersionUID = 1L;
     /**
-     * The title of the location the photo was taken taken in (if any)
+     * The title of the location the photo was taken in (if any)
      */
     private String title;
     /**
@@ -61,15 +62,15 @@ public class Location implements Serializable {
     public Location() {}
 
     /**
-     * Sets the {@link #title} field.
+     * Sets the {@link Location#title} field.
      *
      * @param title the title of the location the photograph was taken in.
      */
-    public Location(String title) { this.title = title; }
+    public Location(String title) {this.title = title;}
 
     /**
-     * A convenience method for setting {@link #title}
-     * and {@link #city} fields all in one go.
+     * A convenience method for setting {@link Location#title}
+     * and {@link Location#city} fields all in one go.
      *
      * @param title the title of the location the photo graph was taken in.
      * @param city  the city where the photograph was taken at.
@@ -80,7 +81,7 @@ public class Location implements Serializable {
     }
 
     /**
-     * A convenience constructor that sets all of the fields separately, especially, the latitude and
+     * A convenience constructor that sets all the fields separately, especially, the latitude and
      * longitude part which takes those in separately as parameters and then packs them in a
      * {@link JSONObject} and then sets the coordinate field.
      *
@@ -104,8 +105,8 @@ public class Location implements Serializable {
     }
 
     /**
-     * A convenience constructor that takes in all of the field value as is more precisely it
-     * takes in the {@link #coordinates} field as a {@link JSONObject} and not as strings
+     * A convenience constructor that takes in all the field value as is more precisely it
+     * takes in the {@link Location#coordinates} field as a {@link JSONObject} and not as strings
      * like its supertype.
      *
      * @param title       the title of the location where the photo was taken in.
@@ -130,11 +131,11 @@ public class Location implements Serializable {
      * @return {@link JSONObject#NULL} value that denotes null/None/Nothing/Empty in a JSON file.
      * @see JSONObject
      */
-    private Object escapeNull(Object value) { return isNull(value) ? JSONObject.NULL : value; }
+    private Object escapeNull(Object value) {return isNull(value) ? JSONObject.NULL : value;}
 
     /**
-     * A convenience method that takes in all of the field value as is more precisely it
-     * takes in the {@link #coordinates} field as a {@link JSONObject} and not as strings
+     * A convenience method that takes in all the field value as is more precisely it
+     * takes in the {@link Location#coordinates} field as a {@link JSONObject} and not as strings
      * like its supertype.
      *
      * @param title       the title of the location where the photo was taken in.
@@ -154,7 +155,7 @@ public class Location implements Serializable {
     }
 
     /**
-     * A convenience method that sets all of the fields separately, especially, the latitude and
+     * A convenience method that sets all the fields separately, especially, the latitude and
      * longitude part which takes those in separately as parameters and then packs them in a
      * {@link JSONObject} and then sets the coordinate field.
      *
@@ -174,7 +175,7 @@ public class Location implements Serializable {
     }
 
     /**
-     * Packs all of the fields into a {@link JSONObject}.<br/>
+     * Packs all the fields into a {@link JSONObject}.<br/>
      * The JSON structure will look like:
      * <pre>{@code
      * "location": {
@@ -203,86 +204,86 @@ public class Location implements Serializable {
     }
 
     /**
-     * Getter for the {@link #title} field.
+     * Getter for the {@link Location#title} field.
      *
      * @return a {@link String}
      */
-    public String getTitle() { return title; }
+    public String getTitle() {return title;}
 
     /**
-     * Setter for the {@link #title} field
+     * Setter for the {@link Location#title} field
      *
      * @param title the tile of the place the photo was taken in
      */
-    public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) {this.title = title;}
 
     /**
-     * Getter for the {@link #name} field.
+     * Getter for the {@link Location#name} field.
      *
      * @return a {@link String}
      */
-    public String getName() { return name; }
+    public String getName() {return name;}
 
     /**
-     * Setter for the {@link #name} field
+     * Setter for the {@link Location#name} field
      *
      * @param name the name of the location the photo was taken at.
      */
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {this.name = name;}
 
     /**
      * Getter for the name of the city the photo was taken at.
      *
      * @return a {@link String}
      */
-    public String getCity() { return city; }
+    public String getCity() {return city;}
 
     /**
-     * Setter for the {@link #city} field.
+     * Setter for the {@link Location#city} field.
      *
      * @param city the name of the city where the photo was taken in.
      */
-    public void setCity(String city) { this.city = city; }
+    public void setCity(String city) {this.city = city;}
 
     /**
-     * Getter for the {@link #country} field.
+     * Getter for the {@link Location#country} field.
      *
      * @return a {@link String}
      */
-    public String getCountry() { return country; }
+    public String getCountry() {return country;}
 
     /**
-     * Setter for the {@link #country} field.
+     * Setter for the {@link Location#country} field.
      *
      * @param country is the name of the country where the photo was taken in.
      */
-    public void setCountry(String country) { this.country = country; }
+    public void setCountry(String country) {this.country = country;}
 
     /**
-     * Getter for the {@link #coordinates} field.
+     * Getter for the {@link Location#coordinates} field.
      *
      * @return a {@link String}
      */
-    public JSONObject getCoordinates() { return coordinates; }
+    public JSONObject getCoordinates() {return coordinates;}
 
     /**
-     * Setter for the {@link #coordinates} field.
+     * Setter for the {@link Location#coordinates} field.
      *
      * @param coordinates is the latitude and longitude value of the exact location where the
      *                    photo was taken in.
      */
-    public void setCoordinates(JSONObject coordinates) { this.coordinates = coordinates; }
+    public void setCoordinates(JSONObject coordinates) {this.coordinates = coordinates;}
 
     /**
      * Returns a string representation of the object. In general, the
      * {@code toString} method returns a string that
      * "textually represents" this object.
-     * It basically calls the {@link #toJSON()} method which returns
+     * It basically calls the {@link Location#toJSON()} method which returns
      * a {@link JSONObject} and the {@link JSONObject#toString(int)} of that object is
      * printed, with an indent factor of 2 tabs.
      *
      * @return a {@link String}
      */
     @Override
-    public String toString() { return toJSON().toString(2); }
+    public String toString() {return toJSON().toString(2);}
 }

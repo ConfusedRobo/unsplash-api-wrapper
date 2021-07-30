@@ -1,5 +1,6 @@
 package utils;
 
+import annotations.Author;
 import interfaces.UnsplashRandom;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvBuilder;
@@ -21,6 +22,7 @@ import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -30,21 +32,22 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static java.net.http.HttpResponse.BodyHandlers;
-import static utils.paths.RandomPaths.RAND_IMAGE_FIXED_SAVE_PATH;
+import static java.util.Objects.isNull;
+import static utils.paths.RandomPaths.RAND_CATEGORISED_SAVE_PATH;
 import static utils.paths.RandomPaths.RAND_JSON_CACHE_SAVE_PATH;
 import static utils.paths.TopPaths.ENV_FILEPATH;
 
 /**
- * This class is a wrapper to generate a random image. It does so by utilising the
- * https://unsplash.com/ website's API. This class supports multiple uses i.e., it
- * is reusable but, in order to look for another category the developer needs to
- * call the {@link #reset()} method and then the {@link #init()} method and pass
- * the new category.
+ * This class is a wrapper to generate a random image based on a specific topic like cats, dogs,
+ * architecture, nature, scenery, etc. It does so by utilising the https://unsplash.com/ website's API.
+ * This class supports multiple uses i.e., it is reusable but, in order to look for another category
+ * the developer needs to call the {@code reset()} method and then the {@code init(String)} method
+ * and pass the new category.
  *
  * @author ConfuesdRobo
  * @see UnsplashRandom
  * @see Iterable
- * @see Map.Entry
+ * @see Entry
  * @see Dotenv
  * @see JSONObject
  * @see Objects
@@ -57,12 +60,18 @@ import static utils.paths.TopPaths.ENV_FILEPATH;
  * @see Files
  * @see Path
  * @see CompletableFuture
+ *
+ * @author ConfusedRobo
  */
-@SuppressWarnings("ALL")
-public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<String, Object>>, UnsplashRandom {
+@Author(
+        author = "ConfusedRobo",
+        creation = "Monday, 19 July, 2021, 05:34:35 PM",
+        profile = "https://github.com/heretickeymaker"
+)
+public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<String, Object>> {
     /**
      * The serial version number field that will assist the JVM to correctly
-     * serializing and deserializing the object
+     * cast/parse the object
      *
      * @see Serializable
      * @see Serial
@@ -75,6 +84,12 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
      */
     private String client_id;
     /**
+     * The category, tag or the topic on which you want to get the image on
+     * for instance if the {@code category = "cat"} then the object should generate
+     * an API call to the unsplash server for a random image of a cat
+     */
+    private String category;
+    /**
      * The API call will actually return information about the image (download links, authors, etc.)
      * in JSON format which is in form of bytes.
      * Now, after the byte stream is converted or, encoded to {@link StandardCharsets#UTF_8} format
@@ -82,12 +97,31 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
      */
     private String stringJSON;
     /**
-     * The same string as stored in the {@link #stringJSON}
+     * The same string as stored in the {@link RandomTag#stringJSON}
      * field variable, will be parsed here rather than just storing a sting with no semantics.
      *
      * @see JSONObject
      */
     private JSONObject cachedImage;
+
+    /**
+     * The default behavior; only the API key will be loaded
+     *
+     * @see RandomTag#loadToken()
+     */
+    public RandomTag() { loadToken(); }
+
+    /**
+     * This constructor assigns a category or a tag during declaration
+     *
+     * @param category the category of the image
+     *
+     * @see RandomTag#loadToken()
+     */
+    public RandomTag(String category) {
+        this.category = category;
+        loadToken();
+    }
 
     /**
      * This method loads the environment variable into runtime temporarily and removes from the env
@@ -98,32 +132,36 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
      * @see Dotenv#load()
      * @see Dotenv#get(String)
      */
-    private void loadToken() {this.client_id = Dotenv.configure().filename(ENV_FILEPATH).load().get("API_KEY");}
+    private void loadToken() { this.client_id = Dotenv.configure().filename(ENV_FILEPATH).load().get("API_KEY"); }
 
     /**
-     * Checks if the {@code cachedImage} field and the {@code stringJSON} has been initialised or
-     * not. Note that, this method is mainly used by {@link #toJSON()},
-     * {@link #downloadLink()} and {@link #toJPG()}
+     * Checks if the {@link RandomTag#cachedImage} field and the
+     * {@link RandomTag#stringJSON} has been initialised or not. Note that, this method
+     * is mainly used by {@link RandomTag#toJSON()},
+     * {@link RandomTag#downloadLink()} and {@link RandomTag#toJPG()}
      * before accessing those field's member methods so, they need to perform a check first to
      * ensure they are not null, or, else it'll yield a {@link NullPointerException}
      *
-     * @return a {@code true} if {@link #cachedImage} and
-     * {@link #stringJSON} fields are not {@code null}, {@code false} otherwise.
+     * @return a {@code true} if {@link RandomTag#cachedImage} and
+     * {@link RandomTag#stringJSON} fields are not {@code null}, {@code false} otherwise.
+     *
      * @see Objects#nonNull(Object)
      */
-    private boolean isInit() {return Objects.nonNull(stringJSON) && Objects.nonNull(cachedImage);}
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean isInit() { return Objects.nonNull(cachedImage) && Objects.nonNull(stringJSON); }
 
     /**
-     * This method method first checks if the API key is loaded into the runtime, if it is, then
+     * This method first checks if the API key is loaded into the runtime, if it is, then
      * the method performs an API call to the Unsplash server and fetches and encodes the bytes
      * into {@link StandardCharsets#UTF_8} format and then first assigns the encoded string to the
-     * {@link #stringJSON} field then assigns that same string to the
-     * {@link #cachedImage} field, which adds semantics to that normal
+     * {@link RandomTag#stringJSON} field then assigns that same string to the
+     * {@link RandomTag#cachedImage} field, which adds semantics to that normal
      * string.
      *
-     * @return true if the {@link #client_id} is loaded and also if
-     * {@link #stringJSON} and {@link #cachedImage}
+     * @return true if the {@link RandomTag#client_id} is loaded and also if
+     * {@link RandomTag#stringJSON} and {@link RandomTag#cachedImage}
      * are assigned, false otherwise.
+     *
      * @see Objects#isNull(Object)
      * @see URI#create(String)
      * @see CompletableFuture
@@ -141,16 +179,18 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
      * @see InterruptedException
      * @see TimeoutException
      */
+    @Override
+    @SuppressWarnings("DuplicatedCode")
     public boolean init() {
-        loadToken();
-        if (Objects.isNull(client_id)) throw new NullPointerException("client_ID is null");
-
-        var prepURLString = API_LINK.replace("API_KEY", client_id);
+        if (isNull(client_id)) return false;
+        var prepURLString = API_LINK.replace("API_KEY", client_id) + LINK_SUBPART_QUERY
+                .replace("CATEGORY", category);
         var request = HttpRequest.newBuilder(URI.create(prepURLString)).build();
         var client = HttpClient.newHttpClient();
 
         try {
             var rawJSONBuilder = new StringBuilder(500);
+            // sending request
             client.sendAsync(request, BodyHandlers.ofString())
                   .thenApply(HttpResponse::body)
                   .thenAccept(rawJSONBuilder::append)
@@ -158,20 +198,40 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
             this.stringJSON = rawJSONBuilder.toString();
             this.cachedImage = new JSONObject(this.stringJSON);
             return true;
-        } catch (InterruptedException | TimeoutException | ExecutionException exception) {return false;}
-    }
-
-    public Map<String, Integer> getImageDimensions() {
-        if (!isInit()) return null;
-        var width = cachedImage.getInt("width");
-        var height = cachedImage.getInt("height");
-        return Map.of("width", width, "height", height);
+        } catch (ExecutionException | InterruptedException | TimeoutException exception) { return false; }
     }
 
     /**
-     * Writes the {@link #stringJSON} to a file
+     * Same as {@link RandomTag#init()} only that it allows you to update the
+     * {@link RandomTag#category} field on initialization
+     *
+     * @param category the topic or genre of random image ou want to generate
+     *
+     * @return {@code true} is the image has been generated without any errors, {@code false} otherwise
+     */
+    public boolean init(String category) {
+        this.category = category;
+        return init();
+    }
+
+    /**
+     * This method taps into the download link which is provided in the JSON and fetches the actual
+     * image in the form of byte stream which can be written to an empty image file.
+     *
+     * @return {@code byte[]} which is the image's byte stream, {@code null} if any {@link IOException}
+     * occurs
+     */
+    private byte @Nullable [] getImageBytes() {
+        try (var stream = new URL(downloadLink()).openStream()) {
+            return stream.readAllBytes();
+        } catch (IOException exception) { return null; }
+    }
+
+    /**
+     * Writes the {@link RandomTag#stringJSON} to a file
      *
      * @return {@code true} if no {@link IOException} occurs, {@code false} otherwise
+     *
      * @see Path#of(String, String...)
      * @see Files#deleteIfExists(Path)
      * @see Files#writeString(Path, CharSequence, OpenOption...)
@@ -180,17 +240,18 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
     public boolean toJSON() {
         if (!isInit()) return false;
         try {
-            var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample-fixed.json");
+            var prepPath = Path.of(RAND_JSON_CACHE_SAVE_PATH + "/" + "sample-tag.json");
             Files.deleteIfExists(prepPath);
             Files.writeString(prepPath, stringJSON);
             return true;
-        } catch (IOException exception) {return false;}
+        } catch (IOException exception) { return false; }
     }
 
     /**
      * This is a utility method, it just fetches the download link from the JSON and returns it.
      *
      * @return a {@code String} that'll contain the download URL, {@code null} otherwise
+     *
      * @see JSONObject#getString(String)
      * @see JSONObject#getJSONObject(String)
      */
@@ -200,11 +261,32 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
         return this.cachedImage.getJSONObject("links").getString("download");
     }
 
-    @Nullable
-    private byte @Nullable [] getImageBytes() {
-        try (var stream = new URL(downloadLink()).openStream()) {
-            return stream.readAllBytes();
-        } catch (IOException exception) {return null;}
+    /**
+     * This method fetches the {@link RandomTag#getImageBytes()} and then writes
+     * those bytes into a JPG file
+     *
+     * @param filename the name of the file
+     *
+     * @return {@code true} if the image has been written successfully, {@code false}
+     * if {@link IOException} or, any other error occurs
+     *
+     * @see IOException
+     * @see Objects#isNull(Object)
+     * @see #isInit()
+     * @see Files#write(Path, byte[], OpenOption...)
+     * @see Path#of(String, String...)
+     */
+    @Override
+    public boolean toJPG(String filename) {
+        if (!isInit()) return false;
+        var imageBytes = getImageBytes();
+        if (isNull(imageBytes)) return false;
+
+        try {
+            var prepSavePath = Path.of(RAND_CATEGORISED_SAVE_PATH + "/" + filename + ".jpg");
+            Files.write(prepSavePath, imageBytes);
+            return true;
+        } catch (IOException exception) { return false; }
     }
 
     /**
@@ -216,57 +298,33 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
     @Override
     public boolean toJPG() {
         var imageID = cachedImage.getString("id");
-        var filename = String.format("%s", imageID);
+        var filename = String.format("%s-%s", category.strip().replace(' ', '-'), imageID);
         return toJPG(filename);
     }
 
     /**
-     * This method fetches the {@link #getImageBytes()} and then writes those bytes into a JPG file
-     *
-     * @param filename the name of the file
-     * @return {@code true} if the image has been written successfully, {@code false}
-     * if {@link IOException} or, any other error occurs
-     * @see IOException
-     * @see Objects#isNull(Object)
-     * @see #isInit()
-     * @see Files#write(Path, byte[], OpenOption...)
-     * @see Path#of(String, String...)
-     */
-    @SuppressWarnings("DuplicatedCode")
-    @Override
-    public boolean toJPG(String filename) {
-        if (!isInit()) return false;
-        var imageBytes = getImageBytes();
-        if (Objects.isNull(imageBytes)) return false;
-
-        try {
-            var prepPath = Path.of(RAND_IMAGE_FIXED_SAVE_PATH + "/" + filename + ".jpg");
-            Files.write(prepPath, imageBytes);
-            return true;
-        } catch (IOException exception) {return false;}
-    }
-
-    /**
-     * Resets the class fields i.e., you'd need to call {@link #init()} or
-     * {@link #init(String)} again in order to reassign/prime the fields for
+     * Resets the class fields i.e., you'd need to call {@link RandomTag#init()} or
+     * {@link RandomTag#init(String)} again in order to reassign/prime the fields for
      * another use.
      */
     @Override
     public void reset() {
-        cachedImage = null;
-        stringJSON = null;
+        this.cachedImage = null;
+        this.stringJSON = null;
+        this.category = null;
     }
 
     /**
      * Returns an iterator over elements of type {@code T}.
      *
      * @return an Iterator.
-     * @see Map.Entry
+     * @see Entry
      * @see JSONObject#toMap()
      * @see Map#entrySet()
      */
+    @NotNull
     @Override
-    public void forEach(Consumer<? super Map.Entry<String, Object>> action) {Iterable.super.forEach(action);}
+    public Iterator<Entry<String, Object>> iterator() { return cachedImage.toMap().entrySet().iterator(); }
 
     /**
      * Performs the given action for each element of the {@code Iterable}
@@ -276,7 +334,7 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
      * caller.
      * <p>
      * The behavior of this method is unspecified if the action performs
-     * side-effects that modify the underlying source of elements, unless an
+     * side effects that modify the underlying source of elements, unless an
      * overriding class has specified a concurrent modification policy.
      *
      * @param action The action to be performed for each element
@@ -289,9 +347,8 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
      * @see Iterable
      * @since 1.8
      */
-    @NotNull
     @Override
-    public Iterator<Map.Entry<String, Object>> iterator() {return cachedImage.toMap().entrySet().iterator();}
+    public void forEach(Consumer<? super Entry<String, Object>> action) { Iterable.super.forEach(action); }
 
     /**
      * Returns a string representation of the object. In general, the
@@ -319,6 +376,7 @@ public class UnsplashRandomFixed implements Serializable, Iterable<Map.Entry<Str
     public String toString() {
         var clientLoaded = Objects.nonNull(client_id);
         var imageLoaded = Objects.nonNull(cachedImage);
-        return "Loaded {TOKEN=" + clientLoaded + ", IMAGE=" + imageLoaded + "}";
+        var categorySet = Objects.nonNull(category);
+        return "Loaded {TOKEN=" + clientLoaded + ", IMAGE=" + imageLoaded + ", TAG=" + categorySet + "}";
     }
 }

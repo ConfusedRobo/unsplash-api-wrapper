@@ -12,6 +12,7 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
  * {@link Author} to be annotated in the same target more than one time.
  *
  * @author ConfusedRobo
+ *
  * @see Annotation
  * @see Documented
  * @see Target

@@ -48,7 +48,7 @@ public @interface Author {
     String creation();
 
     /**
-     * Link your github profile (preferably)
+     * Link your GitHub profile (preferably)
      *
      * @return a {@code String} value
      */

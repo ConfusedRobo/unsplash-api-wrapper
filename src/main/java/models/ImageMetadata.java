@@ -1,5 +1,6 @@
 package models;
 
+import annotations.Author;
 import models.model_utils.Dimension;
 import org.json.JSONObject;
 
@@ -8,19 +9,25 @@ import java.io.Serializable;
 
 
 /**
- * This class parses all of the metadata from the fetched JSON file. Note that, metadata in this
- * context means all of the tertiary information related to an image. Like, blur hash, width, height,
+ * This class parses all the metadata from the fetched JSON file. Note that, metadata in this
+ * context means all the tertiary information related to an image. Like, blur hash, width, height,
  * color profiles, creation date, modification date, etc.
- * Also, this class's {@link #toJSON()} should be called first and other JSON objects added on top of
- * it.
+ * Also, this class's {@link ImageMetadata#toJSON()} should be called first and other JSON
+ * objects added on top of it.
  *
  * @see Serializable
+ *
+ * @author ConfusedRobo
  */
-@SuppressWarnings("SpellCheckingInspection")
+@Author(
+        author = "ConfusedRobo",
+        creation = "Monday, 19 July, 2021, 05:34:35 PM",
+        profile = "https://github.com/heretickeymaker"
+)
 public class ImageMetadata implements Serializable {
     /**
      * The serial version number field that will assist the JVM to correctly
-     * serialize/deserialize the object
+     * serialize and deserialize the object
      */
     @Serial
     private static final long serialVersionUID = 1L;
@@ -49,7 +56,7 @@ public class ImageMetadata implements Serializable {
     public Dimension dimension;
 
     /**
-     * This method packs all of the parsed or, manually assigned data to unsplash.com API compliant
+     * This method packs all the parsed or, manually assigned data to unsplash.com API compliant
      * JSON fragment that can be used build up the whole JSON.
      *
      * @return a {@link JSONObject} object

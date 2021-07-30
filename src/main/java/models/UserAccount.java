@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.stream;
 import static java.util.List.of;
 import static java.util.Map.entry;
 import static java.util.Objects.isNull;
@@ -24,10 +24,10 @@ import static models.UserAccount.UserKeys.*;
 
 /**
  * This class represents the {@code user} JSON fragment from the fetched JSON file. The {@code user}
- * key is basically based on social statictics keys like: instagram username, likes, photos posted -
- * their porfolio links, location - hireability - first name, last name and download links for
+ * key is basically based on social statistics keys like: instagram username, likes, photos posted -
+ * their portfolio links, location - hireable - first name, last name and download links for
  * different sizes of the user's profile image. Also, all the available user keys are noted in
- * {@link UserKeys}, the profile image sizes are noted at {@link PFPSizes} and lastly, all of the
+ * {@link UserKeys}, the profile image sizes are noted at {@link PFPSizes} and lastly, all the
  * available social image keys are noted at {@link SocialKeys}.
  *
  * @see UserKeys
@@ -36,12 +36,13 @@ import static models.UserAccount.UserKeys.*;
  * @see Serializable
  * @see Location
  * @see ImageDateTime
+ *
+ * @author ConfusedRobo
  */
-@SuppressWarnings({"unused", "SpellCheckingInspection"})
 @Author(
         author = "ConfusedRobo",
-        creation = "02-07-2021",
-        profile = "https://github.com/ConfusedRobo"
+        creation = "Monday, 19 July, 2021, 05:34:35 PM",
+        profile = "https://github.com/heretickeymaker"
 )
 public class UserAccount implements Serializable {
     /**
@@ -134,8 +135,8 @@ public class UserAccount implements Serializable {
     public boolean acceptedUnsplashTOS;
 
     /**
-     * The default constructor that only intializes {@link #profileImageSizeLinks} and
-     * {@link #links} fields with {@link HashMap}
+     * The default constructor that only initializes {@link UserAccount#profileImageSizeLinks} and
+     * {@link UserAccount#links} fields with {@link HashMap}
      */
     public UserAccount() {
         profileImageSizeLinks = new HashMap<>(3);
@@ -245,22 +246,22 @@ public class UserAccount implements Serializable {
     }
 
     /**
-     * This method is similar to {@link #addProfileSize(Entry)}. It's just that this method takes two params
-     * and packs into a {@link Entry} i.e., the size of the image and the url link that points to that image
-     * resource
+     * This method is similar to {@link UserAccount#addProfileSize(Entry)}. It's just that this method takes
+     * two params and packs into a {@link Entry} i.e., the size of the image and the url link that points
+     * to that image resource
      *
      * @param size the size of the user's profile image which should be picked out from {@link PFPSizes}
-     * @param url the url of the profile image
+     * @param url  the url of the profile image
      */
-    public void addProfileSize(String size, URL url) { addProfileSize(entry(size, url)); }
+    public void addProfileSize(String size, URL url) {addProfileSize(entry(size, url));}
 
     /**
      * This method accepts raw strings as their url and size key in which, the url string will be parsed into
      * {@link URL} format
      *
-     * @param size the size of the user's profile image which should be picked out from {@link PFPSizes}
+     * @param size      the size of the user's profile image which should be picked out from {@link PFPSizes}
      * @param urlSource the url source string for the profile image
-     * @throws MalformedURLException if the said url to be parsed's format is wrong
+     * @throws MalformedURLException if the said url to be parser's format is wrong
      */
     public void addProfileSize(String size, String urlSource) throws MalformedURLException {
         addProfileSize(size, new URL(urlSource));
@@ -298,14 +299,14 @@ public class UserAccount implements Serializable {
     }
 
     /**
-     * This method is similar to {@link #addLink(Entry)}. It's just that this method takes two params
+     * This method is similar to {@link UserAccount#addLink(Entry)}. It's just that this method takes two params
      * and packs into a {@link Entry} i.e., the social type key and the url link that points to that image
      * resource
      *
      * @param socialType the social type key which should be picked out from {@link SocialKeys}
-     * @param url the {@link URL} of the image resource
+     * @param url        the {@link URL} of the image resource
      */
-    public void addLink(String socialType, URL url) { addLink(entry(socialType, url)); }
+    public void addLink(String socialType, URL url) {addLink(entry(socialType, url));}
 
     /**
      * This method adds all entries at once via. an {@link Entry} array
@@ -313,14 +314,14 @@ public class UserAccount implements Serializable {
      * @param socialLinks is the array of {@link Entry}
      */
     @SafeVarargs
-    public final void addLinks(Entry<String, URL>... socialLinks) { stream(socialLinks).forEach(this::addLink); }
+    public final void addLinks(Entry<String, URL>... socialLinks) {stream(socialLinks).forEach(this::addLink);}
 
     /**
      * This method accepts raw strings as their url and social key in which, the url string will be
      * parsed into {@link URL} format
      *
      * @param socialType the social key that should be picked out from {@link SocialKeys}
-     * @param urlSource the resource pointing to that image resource
+     * @param urlSource  the resource pointing to that image resource
      * @throws MalformedURLException if the raw url string is in incorrect format
      */
     public void addLink(String socialType, String urlSource) throws MalformedURLException {
@@ -348,10 +349,10 @@ public class UserAccount implements Serializable {
          * Packs all of the {@code profile} keys into a list which may be used for
          * validation or, other purposes
          *
-         * @return an unmodiable {@link List} of keys
+         * @return an unmodifiable {@link List} of keys
          */
         @Contract(pure = true)
-        public static @NotNull @Unmodifiable List<String> getAllKeys() { return of(SMALL, MEDIUM, LARGE); }
+        public static @NotNull @Unmodifiable List<String> getAllKeys() {return of(SMALL, MEDIUM, LARGE);}
     }
 
     /**
@@ -427,7 +428,7 @@ public class UserAccount implements Serializable {
          */
         public static String FIRST_NAME = "first_name";
         /**
-         * The instragram username key
+         * The Instagram username key
          */
         public static String INSTAGRAM_USERNAME = "instagram_username";
         /**
@@ -487,7 +488,7 @@ public class UserAccount implements Serializable {
 
         /**
          * Packs all of the {@code social} keys into a list and a few other that are related to
-         * social statictics which may be used for validation or, other purposes
+         * social statistics which may be used for validation or, other purposes
          *
          * @return an unmodifiable {@link List} of keys
          */

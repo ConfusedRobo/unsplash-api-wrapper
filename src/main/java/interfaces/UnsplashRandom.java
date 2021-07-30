@@ -3,33 +3,30 @@ package interfaces;
 import annotations.Author;
 import org.json.JSONObject;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.net.http.HttpRequest;
 
 /**
  * This interface provides all the methods that has to be implemented in
- * order to function and conect to the API server of unsplash. Note that,
+ * order to function and connect to the API server of unsplash. Note that,
  * the methods that are defined here are the bare minimum you need to make
  * a functional API class. Without implementing this interface, your class
- * won't be allowed to connected to the API link.
+ * won't be allowed to connect to the API link.
  *
  * @author ConfusedRobo
  */
 @Author(
         author = "ConfusedRobo",
-        creation = "29-06-2021",
-        profile = "https://github.com/ConfusedRobo"
+        creation = "Monday, 19 July, 2021, 05:34:35 PM",
+        profile = "https://github.com/heretickeymaker"
 )
-@SuppressWarnings("ALL")
 public interface UnsplashRandom extends Serializable {
 
     /**
      * The serial version number field that will assist the JVM to correctly
      * cast/parse the object
      */
-    @Serial
-    static final long serialVersionUID = 1L;
+    long serialVersionUID = 1L;
 
     /**
      * Prepared link for entering the API key, which is saved in an {@code .env}
@@ -41,7 +38,7 @@ public interface UnsplashRandom extends Serializable {
 
     /**
      * It is an extension of the {@code API LINK} prepared link field. Essentially,
-     * this is also an prepared link that must be replaced first with {@code CATEGORY}
+     * this is also a prepared link that must be replaced first with {@code CATEGORY}
      * substring then should be appended to the {@code API_LINK} prepared string.<br/>
      * <b>Example</b>: {@code API_LINK + LINK_SUBPART_QUERY.replace("CATEGORY", "dogs")}
      */
@@ -49,14 +46,14 @@ public interface UnsplashRandom extends Serializable {
 
     /**
      * Should load the image to the JSON or, parse it to other format, preferably, XML.
-     * Also note that this project uses {@link org.json} library so it would be optimal
+     * Also note that this project uses {@link org.json} library, so it would be optimal
      * for you to use JSON and also have a field variable that stores all the parsed
      * JSON code.<br/>
      * <b>
      * Important: It is recommended for you to call this method first to avoid
-     * unnecessary side effects. As, if the environemt variable and image JSON
+     * unnecessary side effects. As, if the environment variable and image JSON
      * isn't loaded then the other methods will malfunction. And, most of the
-     * methods rely on calling {@link #init()} first
+     * methods rely on calling {@code init()} method first
      * </b>
      *
      * @return a boolean
@@ -77,7 +74,7 @@ public interface UnsplashRandom extends Serializable {
     boolean toJSON();
 
     /**
-     * An utility method that is not necessary but we strongly recommend using it
+     * A utility method that is not necessary, but we strongly recommend using it,
      * and so we made implementing this compulsory. This method should only fetch
      * the URL string from the JSON file and return it. Which in turn shortens the
      * code and makes it more readable.
@@ -88,17 +85,17 @@ public interface UnsplashRandom extends Serializable {
 
     /**
      * This method fetches the download link from the {@code JSON} file via the
-     * {@link #downloadLink()} method then applies it to {@link HttpRequest} then
+     * {@link UnsplashRandom#downloadLink()} method then applies it to {@link HttpRequest} then
      * parses the response from the server in bytes. and writes to a {@code jpg}
      * image file with a random name.<br/><br/>
      * <b>
      * Important: Choose the random element carefully or they might conflict and
-     * be ovewritten, also it is recommended to add the {@code id} from the image
+     * be overwritten, also it is recommended to add the {@code id} from the image
      * JSON to the name of the image file.
      * </b>
      * Note: The download link should be available in the JSON that was fetched during
      * initialization.<br/>
-     * Tip: pass the name to the {@link #toJPG(String filename)} as there's
+     * Tip: pass the name to the {@link UnsplashRandom#toJPG(String filename)} as there's
      * no use of doing the same thing twice.
      *
      * @return a boolean
@@ -108,11 +105,11 @@ public interface UnsplashRandom extends Serializable {
     boolean toJPG();
 
     /**
-     * Same as the {@link #toJPG()}, just that now this method should be able to
+     * Same as the {@link UnsplashRandom#toJPG()}, just that now this method should be able to
      * assign a name to the {@code jpg} image file.<br/>
      * <b>
      * Important: Use an escaping mechanism that removes a custom path as, the save
-     * paths are carefully mapped to a fixed file loaction
+     * paths are carefully mapped to a fixed file location
      * </b>
      *
      * @param filename the name of the file
@@ -121,10 +118,10 @@ public interface UnsplashRandom extends Serializable {
     boolean toJPG(String filename);
 
     /**
-     * Clears all the stored caches and makes the implementation reusable i.e., primable
+     * Clears all the stored caches and makes the implementation reusable i.e., prime-able
      * for another image fetch.
      * <b>
-     * Important: Don't forget to re-invoke the {@link #init()} method.
+     * Important: Don't forget to re-invoke the {@link UnsplashRandom#init()} method.
      * </b>
      */
     void reset();
