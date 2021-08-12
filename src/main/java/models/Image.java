@@ -15,28 +15,27 @@ public class Image implements Serializable {
      */
     @Serial
     private static final long serialVersionUID = 1L;
-    private final String id;
-    private String sponsorship;
-    private JSONArray currentUserCollections;
+    public String id;
+    public String sponsorship;
+    public JSONArray currentUserCollections;
 
-    private Map<String, URL> imageSizeLinks;
-    private Map<String, URL> imageInfoLinks;
+    public Map<String, URL> imageSizeLinks;
+    public Map<String, URL> imageInfoLinks;
 
-    private String description;
-    private String altDescription;
+    public String description;
+    public String altDescription;
 
-    private ImageMetadata metadata;
-    private ImageDateTime promotedAt;
-    private UserAccount userAccountInfo;
-    private Location location;
+    public ImageMetadata metadata;
+    public ImageDateTime promotedAt;
+    public CameraInfo exif;
+    public UserAccount userAccountInfo;
+    public Location location;
 
-    private long downloads;
-    private long views;
-    private long likes;
+    public long downloads;
+    public long views;
+    public long likes;
 
-    private boolean imageLikedByOP;
-
-    public Image(String id) { this.id = id; }
+    public boolean selfLikes;
 
     public interface ImageSizes {
         String RAW = "raw";

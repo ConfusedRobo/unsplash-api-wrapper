@@ -68,7 +68,7 @@ import static utils.paths.TopPaths.ENV_FILEPATH;
         creation = "Monday, 19 July, 2021, 05:34:35 PM",
         profile = "https://github.com/heretickeymaker"
 )
-public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<String, Object>> {
+public class RandomTagged implements Serializable, UnsplashRandom, Iterable<Entry<String, Object>> {
     /**
      * The serial version number field that will assist the JVM to correctly
      * cast/parse the object
@@ -97,7 +97,7 @@ public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<S
      */
     private String stringJSON;
     /**
-     * The same string as stored in the {@link RandomTag#stringJSON}
+     * The same string as stored in the {@link RandomTagged#stringJSON}
      * field variable, will be parsed here rather than just storing a sting with no semantics.
      *
      * @see JSONObject
@@ -107,18 +107,18 @@ public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<S
     /**
      * The default behavior; only the API key will be loaded
      *
-     * @see RandomTag#loadToken()
+     * @see RandomTagged#loadToken()
      */
-    public RandomTag() { loadToken(); }
+    public RandomTagged() { loadToken(); }
 
     /**
      * This constructor assigns a category or a tag during declaration
      *
      * @param category the category of the image
      *
-     * @see RandomTag#loadToken()
+     * @see RandomTagged#loadToken()
      */
-    public RandomTag(String category) {
+    public RandomTagged(String category) {
         this.category = category;
         loadToken();
     }
@@ -135,15 +135,15 @@ public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<S
     private void loadToken() { this.client_id = Dotenv.configure().filename(ENV_FILEPATH).load().get("API_KEY"); }
 
     /**
-     * Checks if the {@link RandomTag#cachedImage} field and the
-     * {@link RandomTag#stringJSON} has been initialised or not. Note that, this method
-     * is mainly used by {@link RandomTag#toJSON()},
-     * {@link RandomTag#downloadLink()} and {@link RandomTag#toJPG()}
+     * Checks if the {@link RandomTagged#cachedImage} field and the
+     * {@link RandomTagged#stringJSON} has been initialised or not. Note that, this method
+     * is mainly used by {@link RandomTagged#toJSON()},
+     * {@link RandomTagged#downloadLink()} and {@link RandomTagged#toJPG()}
      * before accessing those field's member methods so, they need to perform a check first to
      * ensure they are not null, or, else it'll yield a {@link NullPointerException}
      *
-     * @return a {@code true} if {@link RandomTag#cachedImage} and
-     * {@link RandomTag#stringJSON} fields are not {@code null}, {@code false} otherwise.
+     * @return a {@code true} if {@link RandomTagged#cachedImage} and
+     * {@link RandomTagged#stringJSON} fields are not {@code null}, {@code false} otherwise.
      *
      * @see Objects#nonNull(Object)
      */
@@ -154,12 +154,12 @@ public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<S
      * This method first checks if the API key is loaded into the runtime, if it is, then
      * the method performs an API call to the Unsplash server and fetches and encodes the bytes
      * into {@link StandardCharsets#UTF_8} format and then first assigns the encoded string to the
-     * {@link RandomTag#stringJSON} field then assigns that same string to the
-     * {@link RandomTag#cachedImage} field, which adds semantics to that normal
+     * {@link RandomTagged#stringJSON} field then assigns that same string to the
+     * {@link RandomTagged#cachedImage} field, which adds semantics to that normal
      * string.
      *
-     * @return true if the {@link RandomTag#client_id} is loaded and also if
-     * {@link RandomTag#stringJSON} and {@link RandomTag#cachedImage}
+     * @return true if the {@link RandomTagged#client_id} is loaded and also if
+     * {@link RandomTagged#stringJSON} and {@link RandomTagged#cachedImage}
      * are assigned, false otherwise.
      *
      * @see Objects#isNull(Object)
@@ -202,8 +202,8 @@ public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<S
     }
 
     /**
-     * Same as {@link RandomTag#init()} only that it allows you to update the
-     * {@link RandomTag#category} field on initialization
+     * Same as {@link RandomTagged#init()} only that it allows you to update the
+     * {@link RandomTagged#category} field on initialization
      *
      * @param category the topic or genre of random image ou want to generate
      *
@@ -228,7 +228,7 @@ public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<S
     }
 
     /**
-     * Writes the {@link RandomTag#stringJSON} to a file
+     * Writes the {@link RandomTagged#stringJSON} to a file
      *
      * @return {@code true} if no {@link IOException} occurs, {@code false} otherwise
      *
@@ -262,7 +262,7 @@ public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<S
     }
 
     /**
-     * This method fetches the {@link RandomTag#getImageBytes()} and then writes
+     * This method fetches the {@link RandomTagged#getImageBytes()} and then writes
      * those bytes into a JPG file
      *
      * @param filename the name of the file
@@ -303,8 +303,8 @@ public class RandomTag implements Serializable, UnsplashRandom, Iterable<Entry<S
     }
 
     /**
-     * Resets the class fields i.e., you'd need to call {@link RandomTag#init()} or
-     * {@link RandomTag#init(String)} again in order to reassign/prime the fields for
+     * Resets the class fields i.e., you'd need to call {@link RandomTagged#init()} or
+     * {@link RandomTagged#init(String)} again in order to reassign/prime the fields for
      * another use.
      */
     @Override
